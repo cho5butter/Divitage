@@ -57,11 +57,13 @@ namespace divitage
 
         private void settingButton_Click(object sender, RoutedEventArgs e)
         {
+            //設定ページの推移
             frame.Source = new Uri("setting.xaml", UriKind.Relative);
         }
 
         private void howToUseButton_Click(object sender, RoutedEventArgs e)
         {
+            //使い方ページの推移
             frame.Source = new Uri("howToUse.xaml", UriKind.Relative);
 
         }

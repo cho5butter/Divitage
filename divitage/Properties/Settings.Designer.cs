@@ -22,5 +22,125 @@ namespace divitage.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int settingSavePathOption {
+            get {
+                return ((int)(this["settingSavePathOption"]));
+            }
+            set {
+                this["settingSavePathOption"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool settingCheckBeforeConvert {
+            get {
+                return ((bool)(this["settingCheckBeforeConvert"]));
+            }
+            set {
+                this["settingCheckBeforeConvert"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int settingImageSplitExtension {
+            get {
+                return ((int)(this["settingImageSplitExtension"]));
+            }
+            set {
+                this["settingImageSplitExtension"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int settingNameConvention {
+            get {
+                return ((int)(this["settingNameConvention"]));
+            }
+            set {
+                this["settingNameConvention"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int settingSplitFrameInterval {
+            get {
+                return ((int)(this["settingSplitFrameInterval"]));
+            }
+            set {
+                this["settingSplitFrameInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int settingInterval {
+            get {
+                return ((int)(this["settingInterval"]));
+            }
+            set {
+                this["settingInterval"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool settingStartOrEndFrame {
+            get {
+                return ((bool)(this["settingStartOrEndFrame"]));
+            }
+            set {
+                this["settingStartOrEndFrame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int settingStartFrame {
+            get {
+                return ((int)(this["settingStartFrame"]));
+            }
+            set {
+                this["settingStartFrame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int settingEndFrame {
+            get {
+                return ((int)(this["settingEndFrame"]));
+            }
+            set {
+                this["settingEndFrame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string settingSavePath {
+            get {
+                return ((string)(this["settingSavePath"]));
+            }
+            set {
+                this["settingSavePath"] = value;
+            }
+        }
     }
 }

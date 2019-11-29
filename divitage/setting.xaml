@@ -23,44 +23,44 @@
                 <ToolTip Content="分割ファイルフォルダの生成場所を選択します"/>
             </ToolTipService.ToolTip>
         </TextBlock>
-        <TextBox x:Name="settingSaveFolderPath" HorizontalAlignment="Left" Height="23" Margin="55,43,0,0" VerticalAlignment="Top" Width="262" TextWrapping="NoWrap" IsEnabled="False"/>
+        <TextBox x:Name="settingSaveFolderPath" HorizontalAlignment="Left" Height="23" Margin="55,43,0,0" VerticalAlignment="Top" Width="262" TextWrapping="NoWrap" IsEnabled="False" Background="White"/>
         <Button x:Name="SettingDecideSavePath" HorizontalContentAlignment="Stretch" Margin="55,71,0,0" VerticalAlignment="Top" Width="262" Click="DecideSavePath_Click" HorizontalAlignment="Left">
             <TextBlock Text="保存先を選択する" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="11"/>
         </Button>
-        <RadioButton GroupName="settingPlace" x:Name="settingSaveSameDirectory" Content="元ファイルの箇所に保存する" HorizontalAlignment="Left" Margin="55,108,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
-        <RadioButton GroupName="settingPlace" x:Name="settingSaveSpecifiedDirectory" Content="指定したファイルに保存する" HorizontalAlignment="Left" Margin="55,128,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
+        <RadioButton GroupName="settingPlace" x:Name="settingSaveSameDirectory" Content="元ファイルの箇所に保存する" HorizontalAlignment="Left" Margin="55,108,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingSaveSameDirectory_Click"/>
+        <RadioButton GroupName="settingPlace" x:Name="settingSaveSpecifiedDirectory" Content="指定したファイルに保存する" HorizontalAlignment="Left" Margin="55,128,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingSaveSpecifiedDirectory_Click"/>
         <TextBlock x:Name="textBlock_Copy" Margin="30,164,0,0" TextWrapping="Wrap" Text="変換前に確認する" VerticalAlignment="Top" Foreground="#FFD1D1D1" Height="28" FontSize="16" HorizontalAlignment="Left" Width="124">
             <ToolTipService.ToolTip>
                 <ToolTip Content="変換前に変換するかどうかの確認画面を表示します"/>
             </ToolTipService.ToolTip>
         </TextBlock>
-        <CheckBox x:Name="settingCheckBeforeConvert" Content="変換前に確認画面を表示する" HorizontalAlignment="Left" Margin="55,197,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
+        <CheckBox x:Name="settingCheckBeforeConvert" Content="変換前に確認画面を表示する" HorizontalAlignment="Left" Margin="55,197,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingCheckBeforeConvert_Click"/>
         <TextBlock x:Name="textBlock_Copy1" Margin="30,0,0,0" TextWrapping="Wrap" Text="命名規則" VerticalAlignment="Top" Foreground="#FFD1D1D1" Height="28" FontSize="16" HorizontalAlignment="Left" Width="124" Grid.Column="1">
             <ToolTipService.ToolTip>
                 <ToolTip Content="分割画像保存先ホルダの命名規則を決定します"/>
             </ToolTipService.ToolTip>
         </TextBlock>
-        <RadioButton x:Name="settingOriginalFilesName" Content="元ファイル名" HorizontalAlignment="Left" Margin="55,43,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1">
+        <RadioButton x:Name="settingOriginalFilesName" Content="元ファイル名" HorizontalAlignment="Left" Margin="55,43,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例) originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingDatePlusOriginalFilesName" Content="日付+元ファイル名" HorizontalAlignment="Left" Margin="55,63,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1">
+        <RadioButton x:Name="settingDatePlusOriginalFilesName" Content="日付+元ファイル名" HorizontalAlignment="Left" Margin="55,63,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingDatePlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例)20191002__originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingTimePlusOriginalFilesName" Content="時間+元ファイル名" HorizontalAlignment="Left" Margin="55,83,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1">
+        <RadioButton x:Name="settingTimePlusOriginalFilesName" Content="時間+元ファイル名" HorizontalAlignment="Left" Margin="55,83,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingTimePlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例)1101__originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingDatePlusTimePlusOriginalFilesName" Content="日付+時間+元ファイル名" HorizontalAlignment="Left" Margin="55,103,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1">
+        <RadioButton x:Name="settingDatePlusTimePlusOriginalFilesName" Content="日付+時間+元ファイル名" HorizontalAlignment="Left" Margin="55,103,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingDatePlusTimePlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例)20200814__1124__originalFileNam"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingRandomPlusOriginalFilesName" Content="ランダム文字列+元ファイル名" HorizontalAlignment="Left" Margin="55,123,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1">
+        <RadioButton x:Name="settingRandomPlusOriginalFilesName" Content="ランダム文字列+元ファイル名" HorizontalAlignment="Left" Margin="55,123,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingRandomPlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例) 32fd3fa__originalFileName"/>
             </ToolTipService.ToolTip>
@@ -71,31 +71,31 @@
             </ToolTipService.ToolTip>
         </TextBlock>
         <TextBlock x:Name="textBlock1" Grid.Column="1" HorizontalAlignment="Left" Margin="55,199,0,0" TextWrapping="Wrap" Text="フレーム分割間隔" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
-        <TextBox x:Name="SettingfileSplitInterval" HorizontalAlignment="Left" Height="23" Margin="156,197,0,0" VerticalAlignment="Top" Width="68" TextWrapping="NoWrap" Grid.Column="1"/>
-        <RadioButton x:Name="settingSplitBySpecifiedNum" Content="指定された枚数毎ごとに分割" HorizontalAlignment="Left" Margin="55,225,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1">
+        <TextBox x:Name="SettingfileSplitInterval" HorizontalAlignment="Left" Height="23" Margin="156,197,0,0" VerticalAlignment="Top" Width="68" TextWrapping="NoWrap" Grid.Column="1" LostFocus="SettingfileSplitInterval_LostFocus"/>
+        <RadioButton x:Name="settingSplitBySpecifiedNum" Content="指定された枚数毎ごとに分割" HorizontalAlignment="Left" Margin="55,225,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingSplitBySpecifiedNum_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例) 32fd3fa__originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingSplitBySpecifiedPer" Content="指定された％間隔ごとに分割" HorizontalAlignment="Left" Margin="54,245,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1">
+        <RadioButton x:Name="settingSplitBySpecifiedPer" Content="指定された％間隔ごとに分割" HorizontalAlignment="Left" Margin="54,245,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingSplitBySpecifiedPer_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例) 32fd3fa__originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
         <TextBlock x:Name="textBlock1_Copy" Grid.Column="1" HorizontalAlignment="Left" Margin="55,296,0,0" TextWrapping="Wrap" Text="開始フレーム数" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
-        <TextBox x:Name="settingStartFrame" HorizontalAlignment="Left" Height="23" Margin="156,293,0,0" VerticalAlignment="Top" Width="68" TextWrapping="NoWrap" Grid.Column="1"/>
+        <TextBox x:Name="settingStartFrame" HorizontalAlignment="Left" Height="23" Margin="156,293,0,0" VerticalAlignment="Top" Width="68" TextWrapping="NoWrap" Grid.Column="1" LostFocus="SettingStartFrame_LostFocus"/>
         <TextBlock x:Name="textBlock1_Copy1" Grid.Column="1" HorizontalAlignment="Left" Margin="54,324,0,0" TextWrapping="Wrap" Text="終了フレーム数" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
-        <TextBox x:Name="settingEndFrame" HorizontalAlignment="Left" Height="23" Margin="156,321,0,0" VerticalAlignment="Top" Width="68" TextWrapping="NoWrap" Grid.Column="1"/>
-        <CheckBox x:Name="settingSpeficiedStartAndEndFrame" Content="開始・終了フレームを指定する" HorizontalAlignment="Left" Margin="55,269,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1"/>
+        <TextBox x:Name="settingEndFrame" HorizontalAlignment="Left" Height="23" Margin="156,321,0,0" VerticalAlignment="Top" Width="68" TextWrapping="NoWrap" Grid.Column="1" LostFocus="SettingEndFrame_LostFocus"/>
+        <CheckBox x:Name="settingSpeficiedStartAndEndFrame" Content="開始・終了フレームを指定する" HorizontalAlignment="Left" Margin="55,269,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingSpeficiedStartAndEndFrame_Click"/>
         <TextBlock x:Name="textBlock_Copy3" Margin="30,228,0,0" TextWrapping="Wrap" Text="分割画像ファイル拡張子" VerticalAlignment="Top" Foreground="#FFD1D1D1" Height="28" FontSize="16" HorizontalAlignment="Left" Width="172">
             <ToolTipService.ToolTip>
                 <ToolTip Content="変換前に変換するかどうかの確認画面を表示します"/>
             </ToolTipService.ToolTip>
         </TextBlock>
-        <RadioButton GroupName="fileExtension"  x:Name="settingExtentionJPG" Content=".jpg" HorizontalAlignment="Left" Margin="55,260,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
-        <RadioButton GroupName="fileExtension" x:Name="settingExtensionBMP" Content=".bmp" HorizontalAlignment="Left" Margin="55,281,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
-        <RadioButton GroupName="fileExtension" x:Name="settingExtensionTIF" Content=".tif" HorizontalAlignment="Left" Margin="55,301,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
-        <RadioButton GroupName="fileExtension" x:Name="settingExtensionPNG" Content=".png" HorizontalAlignment="Left" Margin="55,321,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
+        <RadioButton GroupName="fileExtension"  x:Name="settingExtentionJPG" Content=".jpg" HorizontalAlignment="Left" Margin="55,260,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtentionJPG_Click"/>
+        <RadioButton GroupName="fileExtension" x:Name="settingExtensionBMP" Content=".bmp" HorizontalAlignment="Left" Margin="55,281,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionBMP_Click"/>
+        <RadioButton GroupName="fileExtension" x:Name="settingExtensionTIF" Content=".tif" HorizontalAlignment="Left" Margin="55,301,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionTIF_Click"/>
+        <RadioButton GroupName="fileExtension" x:Name="settingExtensionPNG" Content=".png" HorizontalAlignment="Left" Margin="55,321,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionPNG_Click"/>
         <TextBlock x:Name="textBlock2" Margin="30,0,0,10" Grid.Row="1" TextWrapping="Wrap" Text="※設定を変更すると自動で保存されます" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="204" Foreground="#FFD1D1D1" FontSize="11"/>
     </Grid>
 </Page>
