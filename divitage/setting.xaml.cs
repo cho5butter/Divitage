@@ -83,6 +83,19 @@ namespace divitage
                 this.settingRandomPlusOriginalFilesName.IsChecked = true;
             }
             this.SettingfileSplitInterval.Text = Properties.Settings.Default.settingSplitFrameInterval.ToString();
+            int splitPer = Properties.Settings.Default.settingInterval;
+            if(splitPer == 0)
+            {
+                this.settingSplitBySpecifiedNum.IsChecked = true;
+            }
+            else
+            {
+                this.settingSplitBySpecifiedPer.IsChecked = true;
+            }
+            this.settingSpeficiedStartAndEndFrame.IsChecked = Properties.Settings.Default.settingStartOrEndFrame;
+            this.settingStartOrEndFrameValidCheck();
+            this.settingStartFrame.Text = Properties.Settings.Default.settingStartFrame.ToString();
+            this.settingEndFrame.Text = Properties.Settings.Default.settingEndFrame.ToString();
         }
         private void returnButton_Click(object sender, RoutedEventArgs e)
         {
@@ -99,6 +112,10 @@ namespace divitage
             {
                 settingSaveFolderPath.Text = copd.FileName;
             }
+            this.settingSaveSpecifiedDirectory.IsChecked = true;
+            Properties.Settings.Default.settingSavePathOption = 1;
+            Properties.Settings.Default.settingSavePath = this.settingSaveFolderPath.Text;
+            this.settingDefaultSave();
             copd.Dispose();
         }
 
@@ -193,8 +210,26 @@ namespace divitage
 
         private void SettingfileSplitInterval_LostFocus(object sender, RoutedEventArgs e)
         {
+            int tmpInputValue = 1;
+            try
+            {
+                //入力値チェック
+                tmpInputValue = Convert.ToInt32(this.SettingfileSplitInterval.Text);
+                if (tmpInputValue < 1)
+                {
+                    //0以下が入力されていた場合は，1を入力
+                    MessageBox.Show("1以上の数値を入力してください", "エラー");
+                    this.SettingfileSplitInterval.Text = "1";
+                    this.SettingfileSplitInterval.Text = tmpInputValue.ToString();
+                }
+
+            }catch(Exception err)
+            {
+                Console.WriteLine(err.Message);
+                MessageBox.Show("この設定項目には半角数字のみ入力可能です", "警告");
+            }
             //フレーム分割間隔
-            Properties.Settings.Default.settingSplitFrameInterval = Convert.ToInt32(this.SettingfileSplitInterval.Text);
+            Properties.Settings.Default.settingSplitFrameInterval = tmpInputValue;
             this.settingDefaultSave();
         }
 
@@ -216,31 +251,61 @@ namespace divitage
         {
             //フレームの開始・終了を指定
             Properties.Settings.Default.settingStartOrEndFrame = (bool)this.settingSpeficiedStartAndEndFrame.IsChecked;
+            this.settingStartOrEndFrameValidCheck();
+            this.settingDefaultSave();
+        }
+
+        private void settingStartOrEndFrameValidCheck()
+        {
             if ((bool)this.settingSpeficiedStartAndEndFrame.IsChecked)
             {
                 //開始・終了フレームボックスを有効
                 this.settingStartFrame.IsEnabled = true;
                 this.settingEndFrame.IsEnabled = true;
-            } else
+            }
+            else
             {
                 //開始・終了フレームボックスを無効
                 this.settingStartFrame.IsEnabled = false;
                 this.settingEndFrame.IsEnabled = false;
             }
-            this.settingDefaultSave();
         }
 
         private void SettingStartFrame_LostFocus(object sender, RoutedEventArgs e)
         {
+            int tmpInputValue = -1;
+            try
+            {
+                //入力値チェック
+                tmpInputValue = Convert.ToInt32(this.settingStartFrame.Text);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+                MessageBox.Show("この設定項目には半角数字のみ入力可能です", "警告");
+                this.settingStartFrame.Text = tmpInputValue.ToString();
+            }
             //開始フレーム数
-            Properties.Settings.Default.settingStartFrame = Convert.ToInt32(this.settingStartFrame.Text);
+            Properties.Settings.Default.settingStartFrame = tmpInputValue;
             this.settingDefaultSave();
         }
 
         private void SettingEndFrame_LostFocus(object sender, RoutedEventArgs e)
         {
+            int tmpInputValue = -1;
+            try
+            {
+                //入力値チェック
+                tmpInputValue = Convert.ToInt32(this.settingEndFrame.Text);
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(err.Message);
+                MessageBox.Show("この設定項目には半角数字のみ入力可能です", "警告");
+                this.settingEndFrame.Text = tmpInputValue.ToString();
+            }
             //終了フレーム数
-            Properties.Settings.Default.settingEndFrame = Convert.ToInt32(this.settingEndFrame.Text);
+            Properties.Settings.Default.settingEndFrame = tmpInputValue;
             this.settingDefaultSave();
         }
 

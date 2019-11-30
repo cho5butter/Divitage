@@ -31,7 +31,7 @@
         <RadioButton GroupName="settingPlace" x:Name="settingSaveSpecifiedDirectory" Content="指定したファイルに保存する" HorizontalAlignment="Left" Margin="55,128,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingSaveSpecifiedDirectory_Click"/>
         <TextBlock x:Name="textBlock_Copy" Margin="30,164,0,0" TextWrapping="Wrap" Text="変換前に確認する" VerticalAlignment="Top" Foreground="#FFD1D1D1" Height="28" FontSize="16" HorizontalAlignment="Left" Width="124">
             <ToolTipService.ToolTip>
-                <ToolTip Content="変換前に変換するかどうかの確認画面を表示します"/>
+                <ToolTip Content="分割前に実行するかどうかの確認画面を表示します"/>
             </ToolTipService.ToolTip>
         </TextBlock>
         <CheckBox x:Name="settingCheckBeforeConvert" Content="変換前に確認画面を表示する" HorizontalAlignment="Left" Margin="55,197,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingCheckBeforeConvert_Click"/>
@@ -67,7 +67,7 @@
         </RadioButton>
         <TextBlock x:Name="textBlock_Copy2" Margin="30,164,0,0" TextWrapping="Wrap" Text="分割設定" VerticalAlignment="Top" Foreground="#FFD1D1D1" Height="28" FontSize="16" HorizontalAlignment="Left" Width="124" Grid.Column="1">
             <ToolTipService.ToolTip>
-                <ToolTip Content="分割画像保存先ホルダの命名規則を決定します"/>
+                <ToolTip Content="分割の詳細設定を行えます"/>
             </ToolTipService.ToolTip>
         </TextBlock>
         <TextBlock x:Name="textBlock1" Grid.Column="1" HorizontalAlignment="Left" Margin="55,199,0,0" TextWrapping="Wrap" Text="フレーム分割間隔" VerticalAlignment="Top" Foreground="#FFD1D1D1"/>
@@ -89,7 +89,7 @@
         <CheckBox x:Name="settingSpeficiedStartAndEndFrame" Content="開始・終了フレームを指定する" HorizontalAlignment="Left" Margin="55,269,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingSpeficiedStartAndEndFrame_Click"/>
         <TextBlock x:Name="textBlock_Copy3" Margin="30,228,0,0" TextWrapping="Wrap" Text="分割画像ファイル拡張子" VerticalAlignment="Top" Foreground="#FFD1D1D1" Height="28" FontSize="16" HorizontalAlignment="Left" Width="172">
             <ToolTipService.ToolTip>
-                <ToolTip Content="変換前に変換するかどうかの確認画面を表示します"/>
+                <ToolTip Content="分割後の拡張子を決定します"/>
             </ToolTipService.ToolTip>
         </TextBlock>
         <RadioButton GroupName="fileExtension"  x:Name="settingExtentionJPG" Content=".jpg" HorizontalAlignment="Left" Margin="55,260,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtentionJPG_Click"/>
