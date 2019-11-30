@@ -162,5 +162,14 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\setting.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\charactor.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\charactor.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
