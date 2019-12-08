@@ -171,5 +171,17 @@
   <ItemGroup>
     <Resource Include="Resources\charactor.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\howToUseIcon\browser.png" />
+    <Resource Include="Resources\howToUseIcon\email.png" />
+    <Resource Include="Resources\howToUseIcon\twitter.png" />
+    <Resource Include="Resources\howToUseIcon\youtube.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\colorIcon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

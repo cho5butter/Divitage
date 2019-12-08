@@ -33,5 +33,14 @@
                 </ImageBrush>
             </Ellipse.Fill>
         </Ellipse>
+        <StackPanel Margin="46,217,46,37" HorizontalAlignment="Center">
+            <TextBlock Text="ちょこばた" HorizontalAlignment="Center" Margin="0 0 0 20" FontSize="24" Foreground="White"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image x:Name="image2" Height="40" Source="Resources/howToUseIcon/browser.png" Margin="20 0 20 0"/>
+                <Image x:Name="image3" Height="40" Source="Resources/howToUseIcon/email.png" Margin="20 0 20 0"/>
+                <Image x:Name="image4" Height="40" Source="Resources/howToUseIcon/twitter.png" Margin="20 0 20 0"/>
+                <Image x:Name="image5" Height="40" Source="Resources/howToUseIcon/youtube.png" Margin="20 0 20 0"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
