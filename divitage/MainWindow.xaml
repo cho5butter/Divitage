@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:divitage"
         mc:Ignorable="d"
         Icon="Resources/colorIcon.png"
-        Title="MainWindow" Height="600" Width="900" WindowStyle="None" AllowsTransparency="True" StateChanged="Window_StateChanged" ResizeMode="CanResizeWithGrip" MinWidth="700" MinHeight="500" BorderThickness="20px" SizeChanged="Window_SizeChanged">
+        Title="MainWindow" Height="600" Width="900" WindowStyle="None" AllowsTransparency="True" StateChanged="Window_StateChanged" ResizeMode="CanResizeWithGrip" MinWidth="700" MinHeight="500" BorderThickness="20px" SizeChanged="Window_SizeChanged" AllowDrop="True">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
