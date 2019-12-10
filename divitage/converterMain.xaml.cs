@@ -16,6 +16,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using Hardcodet.Wpf.TaskbarNotification;
+using System.Windows.Threading;
 
 namespace divitage
 {
@@ -84,7 +85,7 @@ namespace divitage
                     {
                         //対応拡張子
                         errCount++;
-                        errorFileName += ( "　(" + errCount + ") このファイル形式は非対応です\n　" + System.IO.Path.GetFileName(item)) +"\n";
+                        errorFileName += ("　(" + errCount + ") このファイル形式は非対応です\n　" + System.IO.Path.GetFileName(item)) + "\n";
                         continue;
                     }
                     afterProcessFileNames.Add(item);
@@ -99,7 +100,7 @@ namespace divitage
 
 
             }
-            if(errorFileName != "")
+            if (errorFileName != "")
             {
                 //エラーが発生していた場合のアラート
                 errorFileName =
@@ -119,13 +120,16 @@ namespace divitage
         private void convertProgress()
         {
             //画面遷移
+            this.startTransition();
             this.counter = 0;
-            foreach(string item in this.fileNames)
+            foreach (string item in this.fileNames)
             {
                 this.splitMovie(item);
                 this.counter++;
             }
             //画面遷移終了
+            this.endTransiton();
+            this.tbi.ShowBalloonTip("変換が完了しました", this.fileCount + "個のファイルの分割が正常に完了しました", Properties.Resources.colorIcon, true);
         }
 
         private void splitMovie(string item)
@@ -144,23 +148,22 @@ namespace divitage
                     vcap.PosFrames = pos;
                     vcap.Read(frame);
                     if (this.counter == 0 && pos == 0) this.showConfirmDialog(frame, item);
-                    //MessageBox.Show((((pos + 1) / vcap.FrameCount) * 100 * ((this.counter + 1) / this.fileCount)).ToString());
+                    mw.progressBar.Value = ((float)(pos + 1) / vcap.FrameCount) * 100 * ((float)(this.counter + 1) / this.fileCount);
                     frame.SaveImage(string.Format("{0}/{1}.{2}", folderPath, pos + 1, extension));
-                    //this.mw.progressBar.Value +=  ((float)(1) / vcap.FrameCount) * 100 * ((float)(1)/this.fileCount);
+                    frame.Dispose();
+                    this.DoEvents();
                 }
                 vcap.Dispose();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Write(e.Message);
-                MessageBox.Show("以下のエラーが発生したため処理を中止しました\n" + e.Message , "警告", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("以下のエラーが発生したため処理を中止しました\n" + e.Message, "警告", MessageBoxButton.OK, MessageBoxImage.Error);
                 //途中フォルダ削除
                 this.deleteFolder(folderPath);
                 this.endTransiton();
                 return;
             }
-            this.tbi.ShowBalloonTip("変換が完了しました", this.fileCount + "個のファイルの分割が正常に完了しました", Properties.Resources.colorIcon, true);
-
         }
 
         private void showConfirmDialog(Mat frame, string path)
@@ -171,10 +174,15 @@ namespace divitage
         private void startTransition()
         {
             //開始時の画面遷移
+            this.topIcon.Visibility = Visibility.Collapsed;
+            this.topLoading.Visibility = Visibility.Visible;
+
         }
         private void endTransiton()
         {
             //終了時の画面遷移＆各パラメータリセット
+            this.topIcon.Visibility = Visibility.Visible;
+            this.topLoading.Visibility = Visibility.Collapsed;
         }
 
         private string makeFolder(string path)
@@ -188,7 +196,7 @@ namespace divitage
 
             string folderName;
             //変換後ファイル格納用のフォルダ作成
-            switch(Properties.Settings.Default.settingNameConvention)
+            switch (Properties.Settings.Default.settingNameConvention)
             {
                 case 0:
                     //元ファイル名そのまま
@@ -212,10 +220,11 @@ namespace divitage
                     break;
             }
             //ファイル保存場所
-            if(Properties.Settings.Default.settingSavePathOption == 0)
+            if (Properties.Settings.Default.settingSavePathOption == 0)
             {
                 folderName = System.IO.Directory.GetParent(path) + "/" + folderName;
-            } else
+            }
+            else
             {
                 folderName = Properties.Settings.Default.settingSavePath + "/" + folderName;
             }
@@ -224,7 +233,7 @@ namespace divitage
             {
                 System.IO.Directory.CreateDirectory(folderName);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Write(e.Message);
             }
@@ -238,7 +247,7 @@ namespace divitage
             {
                 System.IO.Directory.Delete(path);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Write(e.Message);
             }
@@ -248,7 +257,7 @@ namespace divitage
         private string getExtension()
         {
             string extension;
-            switch(Properties.Settings.Default.settingImageSplitExtension)
+            switch (Properties.Settings.Default.settingImageSplitExtension)
             {
                 case 0:
                     extension = "jpg";
@@ -267,6 +276,20 @@ namespace divitage
                     break;
             }
             return extension;
+        }
+
+        private void DoEvents()
+        {
+            DispatcherFrame frame = new DispatcherFrame();
+            var callback = new DispatcherOperationCallback(ExitFrames);
+            Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, callback, frame);
+            Dispatcher.PushFrame(frame);
+        }
+
+        private object ExitFrames(object obj)
+        {
+            ((DispatcherFrame)obj).Continue = false;
+            return null;
         }
     }
 }
