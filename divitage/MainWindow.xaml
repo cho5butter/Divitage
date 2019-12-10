@@ -45,13 +45,13 @@
         </StackPanel>
         <ProgressBar x:Name="progressBar" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0,0" Grid.Row="4" BorderBrush="{x:Null}" Background="#FF3E3E3E" Foreground="#FF40CBEA"/>
         <StackPanel Grid.Row="2" Grid.RowSpan="3" Margin="0,0,0,0" VerticalAlignment="Bottom">
-            <Button x:Name="settingButton" Style="{StaticResource PageTransitionButtonStyle}" Click="settingButton_Click" Margin="30 10 0 0">
+            <Button Cursor="Hand"  x:Name="settingButton" Style="{StaticResource PageTransitionButtonStyle}" Click="settingButton_Click" Margin="30 10 0 0">
                 <StackPanel Orientation="Horizontal" Margin="4,2">
                     <Image x:Name="build" VerticalAlignment="Center" Width="20" Source="Resources/settingButtonIcon.png"/>
                     <Label Content="設定画面" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#FFD1D1D1" FontFamily="Yu Gothic UI Semibold"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="howToUseButton" Style="{StaticResource PageTransitionButtonStyle}" Click="howToUseButton_Click" Margin="30 10 0 30">
+            <Button Cursor="Hand" x:Name="howToUseButton" Style="{StaticResource PageTransitionButtonStyle}" Click="howToUseButton_Click" Margin="30 10 0 30">
                 <StackPanel Orientation="Horizontal" Margin="4,2">
                     <Image VerticalAlignment="Center" Width="20" Source="Resources/howToUseButtonIcon.png"/>
                     <Label Content="使い方" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="#FFD1D1D1" FontFamily="Yu Gothic UI Semibold"/>
