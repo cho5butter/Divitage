@@ -61,9 +61,13 @@ namespace divitage
             {
                 this.settingExtensionTIF.IsChecked = true;
             }
-            else
+            else if (fileExtension == 3)
             {
                 this.settingExtensionPNG.IsChecked = true;
+            }
+            else
+            {
+                this.settingExtensionGIF.IsChecked = true;
             }
             //命名規則
             int nameConvention = Properties.Settings.Default.settingNameConvention;
@@ -176,10 +180,17 @@ namespace divitage
             this.settingDefaultSave();
         }
 
-        private void SettingExtentionJPG_Click(object sender, RoutedEventArgs e)
+        private void SettingExtensionJPG_Click(object sender, RoutedEventArgs e)
         {
             //画像分割ファイル（JPG）
             Properties.Settings.Default.settingImageSplitExtension = 3;
+            this.settingDefaultSave();
+        }
+
+        private void SettingExtensionGIF_Click(object sender, RoutedEventArgs e)
+        {
+            //画像分割ファイル（GIF)
+            Properties.Settings.Default.settingImageSplitExtension = 4;
             this.settingDefaultSave();
         }
 

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using OpenCvSharp;
 
 namespace divitage
 {
@@ -105,8 +106,139 @@ namespace divitage
             }
             this.fileCount = afterProcessFileNames.Count;
             if (this.fileCount == 0) return;//ファイルがない場合はここで処理中止 
-            
+            this.convertProgress();
 
+        }
+
+        private void convertProgress()
+        {
+            //画面遷移
+            this.counter = 0;
+            foreach(string item in this.fileNames)
+            {
+                this.splitMovie(item);
+                this.counter++;
+            }
+            //画面遷移終了
+        }
+
+        private void splitMovie(string item)
+        {
+            //格納用フォルダ生成
+            string folderPath = this.makeFolder(item);
+            //拡張子保存
+            string extension = this.getExtension();
+            try
+            {
+                //動画ファイル分割
+                VideoCapture vcap = new VideoCapture(item);
+                for (int pos = 0; pos < vcap.FrameCount; pos++)
+                {
+                    Mat frame = new Mat();
+                    vcap.PosFrames = pos;
+                    vcap.Read(frame);
+                    if (this.counter == 0 && pos == 0) this.showConfirmDialog(frame, item);
+                    frame.SaveImage(string.Format("{0}/{1}.{2}", folderPath, pos + 1, extension));
+                }
+            }
+            catch(Exception e)
+            {
+                Console.Write(e.Message);
+                MessageBox.Show("以下のエラーが発生したため処理を中止しました\n" + e.Message , "警告", MessageBoxButton.OK, MessageBoxImage.Error);
+                //途中フォルダ削除
+                this.deleteFolder(folderPath);
+                this.endTransiton();
+                return;
+            }
+
+        }
+
+        private void showConfirmDialog(Mat frame, string path)
+        {
+            //確認画面表示オプション
+
+        }
+        private void startTransition()
+        {
+            //開始時の画面遷移
+        }
+        private void endTransiton()
+        {
+            //終了時の画面遷移＆各パラメータリセット
+        }
+
+        private string makeFolder(string path)
+        {
+            DateTime dt = DateTime.Today;
+            string date = dt.ToString("yyyyMMdd");
+            string time = dt.ToString("HHmm");
+            System.Guid g = System.Guid.NewGuid();
+            string random = g.ToString().Substring(0, 8);
+            string fileName = System.IO.Path.GetFileName(path);
+
+            string folderName;
+            //変換後ファイル格納用のフォルダ作成
+            switch(Properties.Settings.Default.settingNameConvention)
+            {
+                case 0:
+                    //元ファイル名そのまま
+                    folderName = fileName;
+                    break;
+                case 1:
+                    //日付+元ファイル名
+                    folderName = date + "_" + fileName;
+                    break;
+                case 2:
+                    //時間+元ファイル名
+                    folderName = time + "_" + fileName;
+                    break;
+                case 3:
+                    //日付+時間+元ファイル名
+                    folderName = date + "_" + time + "_" + fileName;
+                    break;
+                default:
+                    //ランダム文字列+元ファイル名
+                    folderName = random + "_" + fileName;
+                    break;
+            }
+            //ファイル保存場所
+            if(Properties.Settings.Default.settingSavePathOption == 1)
+            {
+                folderName = Properties.Settings.Default.settingSavePath + folderName;
+            }
+            //フォルダー生成
+            System.IO.Directory.CreateDirectory(folderName);
+            return folderName;
+        }
+
+        private void deleteFolder(string path)
+        {
+            //フォルダの削除
+
+        }
+
+        private string getExtension()
+        {
+            string extension;
+            switch(Properties.Settings.Default.settingImageSplitExtension)
+            {
+                case 0:
+                    extension = "jpg";
+                    break;
+                case 1:
+                    extension = "bmp";
+                    break;
+                case 2:
+                    extension = "tif";
+                    break;
+                case 3:
+                    extension = "png";
+                    break;
+                default:
+                    extension = "gif";
+                    break;
+            }
+            return extension;
         }
     }
 }
