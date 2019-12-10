@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using OpenCvSharp;
+using OpenCvSharp.Extensions;
+using Hardcodet.Wpf.TaskbarNotification;
 
 namespace divitage
 {
@@ -25,9 +27,14 @@ namespace divitage
         private string[] fileNames;
         private int fileCount; //全体のファイル数
         private int counter;   //ファイルのカウンター
+        MainWindow mw;         //メインウインドウ
+        TaskbarIcon tbi;       //通知
         public converterMain()
         {
             InitializeComponent();
+            this.mw = (MainWindow)App.Current.MainWindow;
+            this.tbi = new TaskbarIcon();
+            this.tbi.Icon = Properties.Resources.colorIcon;
         }
 
         private void Grid_PreviewDragOver(object sender, DragEventArgs e)
@@ -81,7 +88,6 @@ namespace divitage
                         continue;
                     }
                     afterProcessFileNames.Add(item);
-                    MessageBox.Show("30");
                 }
                 catch (Exception err)
                 {
@@ -138,8 +144,11 @@ namespace divitage
                     vcap.PosFrames = pos;
                     vcap.Read(frame);
                     if (this.counter == 0 && pos == 0) this.showConfirmDialog(frame, item);
+                    //MessageBox.Show((((pos + 1) / vcap.FrameCount) * 100 * ((this.counter + 1) / this.fileCount)).ToString());
                     frame.SaveImage(string.Format("{0}/{1}.{2}", folderPath, pos + 1, extension));
+                    this.mw.progressBar.Value =  ((float)(pos + 1) / vcap.FrameCount) * 100 * ((float)(this.counter + 1)/this.fileCount);
                 }
+                vcap.Dispose();
             }
             catch(Exception e)
             {
@@ -150,6 +159,7 @@ namespace divitage
                 this.endTransiton();
                 return;
             }
+            this.tbi.ShowBalloonTip("変換が完了しました", this.fileCount + "個のファイルの分割が正常に完了しました", Properties.Resources.colorIcon, true);
 
         }
 
@@ -174,7 +184,7 @@ namespace divitage
             string time = dt.ToString("HHmm");
             System.Guid g = System.Guid.NewGuid();
             string random = g.ToString().Substring(0, 8);
-            string fileName = System.IO.Path.GetFileName(path);
+            string fileName = System.IO.Path.GetFileNameWithoutExtension(path);
 
             string folderName;
             //変換後ファイル格納用のフォルダ作成
@@ -202,18 +212,36 @@ namespace divitage
                     break;
             }
             //ファイル保存場所
-            if(Properties.Settings.Default.settingSavePathOption == 1)
+            if(Properties.Settings.Default.settingSavePathOption == 0)
             {
-                folderName = Properties.Settings.Default.settingSavePath + folderName;
+                folderName = System.IO.Directory.GetParent(path) + "/" + folderName;
+            } else
+            {
+                folderName = Properties.Settings.Default.settingSavePath + "/" + folderName;
             }
             //フォルダー生成
-            System.IO.Directory.CreateDirectory(folderName);
+            try
+            {
+                System.IO.Directory.CreateDirectory(folderName);
+            }
+            catch(Exception e)
+            {
+                Console.Write(e.Message);
+            }
             return folderName;
         }
 
         private void deleteFolder(string path)
         {
             //フォルダの削除
+            try
+            {
+                System.IO.Directory.Delete(path);
+            }
+            catch(Exception e)
+            {
+                Console.Write(e.Message);
+            }
 
         }
 
