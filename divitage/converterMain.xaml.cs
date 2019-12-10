@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace divitage
 {
@@ -39,7 +40,19 @@ namespace divitage
 
         private void Grid_PreviewDrop(object sender, DragEventArgs e)
         {
+            //ドロップファイル選択
             this.fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            this.verifyMovieFile();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //ファイル選択ボタン
+            CommonOpenFileDialog copd = new CommonOpenFileDialog("動画ファイルを選択して下さい");
+            copd.Multiselect = true;
+            CommonFileDialogResult ret = copd.ShowDialog();
+            if (ret != CommonFileDialogResult.Ok) return;
+            this.fileNames = copd.FileNames.ToArray();
             this.verifyMovieFile();
         }
 

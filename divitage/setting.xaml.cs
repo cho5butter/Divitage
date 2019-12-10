@@ -37,7 +37,7 @@ namespace divitage
             this.settingSaveFolderPath.Text = Properties.Settings.Default.settingSavePath;
             //保存先オプション
             int savePathOption = Properties.Settings.Default.settingSavePathOption;
-            if(savePathOption == 0)
+            if (savePathOption == 0)
             {
                 this.settingSaveSameDirectory.IsChecked = true;
             }
@@ -49,15 +49,15 @@ namespace divitage
             this.settingCheckBeforeConvert.IsChecked = Properties.Settings.Default.settingCheckBeforeConvert;
             //ファイル拡張子
             int fileExtension = Properties.Settings.Default.settingImageSplitExtension;
-            if(fileExtension == 0)
+            if (fileExtension == 0)
             {
                 this.settingExtentionJPG.IsChecked = true;
             }
-            else if(fileExtension == 1)
+            else if (fileExtension == 1)
             {
                 this.settingExtensionBMP.IsChecked = true;
             }
-            else if(fileExtension == 2)
+            else if (fileExtension == 2)
             {
                 this.settingExtensionTIF.IsChecked = true;
             }
@@ -67,19 +67,19 @@ namespace divitage
             }
             //命名規則
             int nameConvention = Properties.Settings.Default.settingNameConvention;
-            if(nameConvention == 0)
+            if (nameConvention == 0)
             {
                 this.settingOriginalFilesName.IsChecked = true;
             }
-            else if(nameConvention == 1)
+            else if (nameConvention == 1)
             {
                 this.settingDatePlusOriginalFilesName.IsChecked = true;
             }
-            else if(nameConvention == 2)
+            else if (nameConvention == 2)
             {
                 this.settingTimePlusOriginalFilesName.IsChecked = true;
             }
-            else if(nameConvention == 3)
+            else if (nameConvention == 3)
             {
                 this.settingDatePlusTimePlusOriginalFilesName.IsChecked = true;
             }
@@ -91,7 +91,7 @@ namespace divitage
             this.SettingfileSplitInterval.Text = Properties.Settings.Default.settingSplitFrameInterval.ToString();
             //分割枚数オプション
             int splitPer = Properties.Settings.Default.settingInterval;
-            if(splitPer == 0)
+            if (splitPer == 0)
             {
                 this.settingSplitBySpecifiedNum.IsChecked = true;
             }
@@ -110,7 +110,7 @@ namespace divitage
         private void returnButton_Click(object sender, RoutedEventArgs e)
         {
             mainWindow.frame.Source = new Uri("converterMain.xaml", UriKind.Relative);
-            
+
         }
 
         private void DecideSavePath_Click(object sender, RoutedEventArgs e)
@@ -118,14 +118,14 @@ namespace divitage
             CommonOpenFileDialog copd = new CommonOpenFileDialog("保存先選択");
             copd.IsFolderPicker = true;
             CommonFileDialogResult ret = copd.ShowDialog();
-            if(ret == CommonFileDialogResult.Ok)
+            if (ret == CommonFileDialogResult.Ok)
             {
                 settingSaveFolderPath.Text = copd.FileName;
+                this.settingSaveSpecifiedDirectory.IsChecked = true;
+                Properties.Settings.Default.settingSavePathOption = 1;
+                Properties.Settings.Default.settingSavePath = this.settingSaveFolderPath.Text;
+                this.settingDefaultSave();
             }
-            this.settingSaveSpecifiedDirectory.IsChecked = true;
-            Properties.Settings.Default.settingSavePathOption = 1;
-            Properties.Settings.Default.settingSavePath = this.settingSaveFolderPath.Text;
-            this.settingDefaultSave();
             copd.Dispose();
         }
 
@@ -233,7 +233,8 @@ namespace divitage
                     this.SettingfileSplitInterval.Text = tmpInputValue.ToString();
                 }
 
-            }catch(Exception err)
+            }
+            catch (Exception err)
             {
                 Console.WriteLine(err.Message);
                 MessageBox.Show("この設定項目には半角数字のみ入力可能です", "警告");
