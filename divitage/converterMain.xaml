@@ -3,14 +3,32 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:loadin="clr-namespace:LoadingIndicators.WPF;assembly=LoadingIndicators.WPF"
       xmlns:local="clr-namespace:divitage"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="converterMain">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingDoubleBounce.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid PreviewDragOver="Grid_PreviewDragOver" PreviewDrop="Grid_PreviewDrop" AllowDrop="True">
         <Border BorderThickness="2" Background="#FF3E3E3E">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <loadin:LoadingIndicator SpeedRatio="{Binding SpeedRatio}" IsActive="{Binding IsDoubleBounceActive}" Style="{DynamicResource LoadingIndicatorArcsStyle}" Foreground="#FF04B2D9" RenderTransformOrigin="0.5,0.5" Margin="0 50 0 80" Visibility="Collapsed">
+                    <loadin:LoadingIndicator.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="3" ScaleY="3"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </loadin:LoadingIndicator.RenderTransform>
+                </loadin:LoadingIndicator>
                 <Image Source="Resources/video-player.png" Width="150" Margin="0 0 0 30"/>
                 <TextBlock Text="動画ファイルをここにドラッグ＆ドロップするか以下のボタンからファイルを選択して下さい" Foreground="#FFDADADA" FontSize="14"/>
                 <Button Cursor="Hand" Content="動画ファイルを選択" Width="300" Height="40" Margin="0 30 0 30" Foreground="#FFDADADA" Click="Button_Click">
