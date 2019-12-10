@@ -17,7 +17,7 @@
                         <ControlTemplate TargetType="Button">
                             <Border Name="border"
                                     BorderThickness="1"
-                                    Background="#CCBF3415"
+                                    Background="#CCF23005"
                                     CornerRadius="10">
                                 <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>

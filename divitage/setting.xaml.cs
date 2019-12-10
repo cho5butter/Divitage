@@ -33,7 +33,9 @@ namespace divitage
 
         private void loadSettingData()
         {
+            //保存ファイル場所
             this.settingSaveFolderPath.Text = Properties.Settings.Default.settingSavePath;
+            //保存先オプション
             int savePathOption = Properties.Settings.Default.settingSavePathOption;
             if(savePathOption == 0)
             {
@@ -43,7 +45,9 @@ namespace divitage
             {
                 this.settingSaveSpecifiedDirectory.IsChecked = true;
             }
+            //変換前確認
             this.settingCheckBeforeConvert.IsChecked = Properties.Settings.Default.settingCheckBeforeConvert;
+            //ファイル拡張子
             int fileExtension = Properties.Settings.Default.settingImageSplitExtension;
             if(fileExtension == 0)
             {
@@ -61,6 +65,7 @@ namespace divitage
             {
                 this.settingExtensionPNG.IsChecked = true;
             }
+            //命名規則
             int nameConvention = Properties.Settings.Default.settingNameConvention;
             if(nameConvention == 0)
             {
@@ -82,7 +87,9 @@ namespace divitage
             {
                 this.settingRandomPlusOriginalFilesName.IsChecked = true;
             }
+            //フレーム分割間隔
             this.SettingfileSplitInterval.Text = Properties.Settings.Default.settingSplitFrameInterval.ToString();
+            //分割枚数オプション
             int splitPer = Properties.Settings.Default.settingInterval;
             if(splitPer == 0)
             {
@@ -92,9 +99,12 @@ namespace divitage
             {
                 this.settingSplitBySpecifiedPer.IsChecked = true;
             }
+            //開始・終了フレーム指定
             this.settingSpeficiedStartAndEndFrame.IsChecked = Properties.Settings.Default.settingStartOrEndFrame;
             this.settingStartOrEndFrameValidCheck();
+            //開始フレーム指定
             this.settingStartFrame.Text = Properties.Settings.Default.settingStartFrame.ToString();
+            //終了フレーム指定
             this.settingEndFrame.Text = Properties.Settings.Default.settingEndFrame.ToString();
         }
         private void returnButton_Click(object sender, RoutedEventArgs e)

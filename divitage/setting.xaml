@@ -40,27 +40,27 @@
                 <ToolTip Content="分割画像保存先ホルダの命名規則を決定します"/>
             </ToolTipService.ToolTip>
         </TextBlock>
-        <RadioButton x:Name="settingOriginalFilesName" Content="元ファイル名" HorizontalAlignment="Left" Margin="55,43,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingOriginalFilesName_Click">
+        <RadioButton GroupName="nameConvention" x:Name="settingOriginalFilesName" Content="元ファイル名" HorizontalAlignment="Left" Margin="55,43,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例) originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingDatePlusOriginalFilesName" Content="日付+元ファイル名" HorizontalAlignment="Left" Margin="55,63,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingDatePlusOriginalFilesName_Click">
+        <RadioButton GroupName="nameConvention" x:Name="settingDatePlusOriginalFilesName" Content="日付+元ファイル名" HorizontalAlignment="Left" Margin="55,63,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingDatePlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例)20191002__originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingTimePlusOriginalFilesName" Content="時間+元ファイル名" HorizontalAlignment="Left" Margin="55,83,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingTimePlusOriginalFilesName_Click">
+        <RadioButton GroupName="nameConvention" x:Name="settingTimePlusOriginalFilesName" Content="時間+元ファイル名" HorizontalAlignment="Left" Margin="55,83,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingTimePlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例)1101__originalFileName"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingDatePlusTimePlusOriginalFilesName" Content="日付+時間+元ファイル名" HorizontalAlignment="Left" Margin="55,103,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingDatePlusTimePlusOriginalFilesName_Click">
+        <RadioButton GroupName="nameConvention" x:Name="settingDatePlusTimePlusOriginalFilesName" Content="日付+時間+元ファイル名" HorizontalAlignment="Left" Margin="55,103,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingDatePlusTimePlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例)20200814__1124__originalFileNam"/>
             </ToolTipService.ToolTip>
         </RadioButton>
-        <RadioButton x:Name="settingRandomPlusOriginalFilesName" Content="ランダム文字列+元ファイル名" HorizontalAlignment="Left" Margin="55,123,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingRandomPlusOriginalFilesName_Click">
+        <RadioButton GroupName="nameConvention" x:Name="settingRandomPlusOriginalFilesName" Content="ランダム文字列+元ファイル名" HorizontalAlignment="Left" Margin="55,123,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Grid.Column="1" Click="SettingRandomPlusOriginalFilesName_Click">
             <ToolTipService.ToolTip>
                 <ToolTip Content="例) 32fd3fa__originalFileName"/>
             </ToolTipService.ToolTip>

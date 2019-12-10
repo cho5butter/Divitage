@@ -30,7 +30,7 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.RowSpan="2">
-            <StackPanel  Width="170" Height="170" Background="#FF40CBEA"  HorizontalAlignment="Right" VerticalAlignment="Top">
+            <StackPanel  Width="170" Height="170" Background="#04B2D9"  HorizontalAlignment="Right" VerticalAlignment="Top">
                 <Border Width="170" Height="170">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                         <Image Width="100" Source="Resources/icon.png"/>

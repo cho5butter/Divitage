@@ -40,17 +40,17 @@ namespace divitage
         private void Grid_PreviewDrop(object sender, DragEventArgs e)
         {
             this.fileNames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            MessageBox.Show(fileNames[0]);
-            MessageBox.Show(fileNames[1]);
+            this.verifyMovieFile();
         }
 
         private void verifyMovieFile()
         {
             //パラメータ初期化
             this.fileCount = 0;
+            int errCount = 0;
             //処理後ファイル数
             var afterProcessFileNames = new List<string>();
-            var errorFileName = new List<string>();
+            string errorFileName = "";
             //対応ファイル拡張子
             string[] allowExtensions = { ".avi", ".mp4", ".mov", ".wmv", ".flv", ".mpg" };
             //拡張子調査・情報取得
@@ -62,7 +62,8 @@ namespace divitage
                     if (0 > Array.IndexOf(allowExtensions, tmpExtension))
                     {
                         //対応拡張子
-                        errorFileName.Add("非対応形式であるため，次のファイルが処理できませんでした\n" + System.IO.Path.GetFileName(item));
+                        errCount++;
+                        errorFileName += ( "　(" + errCount + ") このファイル形式は非対応です\n　" + System.IO.Path.GetFileName(item)) +"\n";
                         continue;
                     }
                     afterProcessFileNames.Add(item);
@@ -70,14 +71,28 @@ namespace divitage
                 }
                 catch (Exception err)
                 {
-                    errorFileName.Add("「" + err.Message + "」のため，次のファイルが処理できませんでした\n" + System.IO.Path.GetFileName(item));
+                    //例外処理
+                    errCount++;
+                    errorFileName += ("　(" + errCount + ")" + err.Message + "\n　" + System.IO.Path.GetFileName(item)) + "\n";
                     continue;
                 }
 
 
             }
+            if(errorFileName != "")
+            {
+                //エラーが発生していた場合のアラート
+                errorFileName =
+                    errCount +
+                    "個のファイルの分割が以下の理由でスキップされました\n" +
+                    "--------------------------------------------------------------------\n" +
+                    errorFileName +
+                    "--------------------------------------------------------------------\n";
+                MessageBox.Show(errorFileName, "以下のファイルの処理に失敗しました", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             this.fileCount = afterProcessFileNames.Count;
-            MessageBox.Show(this.fileCount.ToString());
+            if (this.fileCount == 0) return;//ファイルがない場合はここで処理中止 
+            
 
         }
     }
