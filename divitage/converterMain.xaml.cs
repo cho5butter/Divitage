@@ -146,7 +146,7 @@ namespace divitage
                     if (this.counter == 0 && pos == 0) this.showConfirmDialog(frame, item);
                     //MessageBox.Show((((pos + 1) / vcap.FrameCount) * 100 * ((this.counter + 1) / this.fileCount)).ToString());
                     frame.SaveImage(string.Format("{0}/{1}.{2}", folderPath, pos + 1, extension));
-                    this.mw.progressBar.Value =  ((float)(pos + 1) / vcap.FrameCount) * 100 * ((float)(this.counter + 1)/this.fileCount);
+                    //this.mw.progressBar.Value +=  ((float)(1) / vcap.FrameCount) * 100 * ((float)(1)/this.fileCount);
                 }
                 vcap.Dispose();
             }
