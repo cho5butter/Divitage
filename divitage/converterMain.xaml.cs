@@ -151,7 +151,16 @@ namespace divitage
                     Mat frame = new Mat();
                     vcap.PosFrames = pos;
                     vcap.Read(frame);
-                    if (tmpCounter == 0 && Properties.Settings.Default.settingCheckBeforeConvert) this.showConfirmDialog(frame, item, vcap.FrameCount);
+                    if (tmpCounter == 0 && Properties.Settings.Default.settingCheckBeforeConvert)
+                    {
+                        bool doSplit = this.showConfirmDialog(frame, item, vcap.FrameCount);
+                        if(!doSplit)
+                        {
+                            this.deleteFolder(folderPath);
+                            this.endTransiton();
+                            return;
+                        }
+                    }
                     frame.SaveImage(string.Format("{0}/{1}.{2}", folderPath, pos + 1, extension));
                     frame.Dispose();
                     float fileProgress = ((float)(pos + 1) / vcap.FrameCount) * 100;
@@ -186,12 +195,14 @@ namespace divitage
             }
         }
 
-        private void showConfirmDialog(Mat frame, string path, int num)
+        private bool showConfirmDialog(Mat frame, string path, int num)
         {
             //確認画面表示オプション
             confirmDialog cd = new confirmDialog(frame, path, num);
             cd.ShowDialog();
-
+            bool doSplit = cd.Result;
+            cd.Close();
+            return doSplit;
         }
         private void startTransition()
         {
@@ -199,7 +210,8 @@ namespace divitage
             this.topIcon.Visibility = Visibility.Collapsed;
             this.topLoading.Visibility = Visibility.Visible;
             this.processStart.Visibility = Visibility.Collapsed;
-            this.discText.Text = "現在変換中です．完了までお待ち下さい．";
+            this.discText.Text = "現在分割中です．完了までお待ち下さい．";
+            this.Grid.AllowDrop = false;
 
         }
         private void endTransiton()
@@ -209,6 +221,7 @@ namespace divitage
             this.topLoading.Visibility = Visibility.Collapsed;
             this.processStart.Visibility = Visibility.Visible;
             this.discText.Text = "動画ファイルをここにドラッグ＆ドロップするか以下のボタンからファイルを選択して下さい";
+            this.Grid.AllowDrop = true;
         }
 
         private string makeFolder(string path)

@@ -16,7 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    <Grid PreviewDragOver="Grid_PreviewDragOver" PreviewDrop="Grid_PreviewDrop" AllowDrop="True">
+    <Grid PreviewDragOver="Grid_PreviewDragOver" PreviewDrop="Grid_PreviewDrop" AllowDrop="True" x:Name="Grid">
         <Border BorderThickness="2" Background="#FF3E3E3E">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <loadin:LoadingIndicator x:Name="topLoading" SpeedRatio="{Binding SpeedRatio}" IsActive="{Binding IsDoubleBounceActive}" Style="{DynamicResource LoadingIndicatorArcsStyle}" Foreground="#FF04B2D9" RenderTransformOrigin="0.5,0.5" Margin="0 50 0 80" Visibility="Collapsed">

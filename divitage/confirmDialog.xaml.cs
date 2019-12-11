@@ -24,6 +24,7 @@ namespace divitage
         private Mat m_frame;
         private string m_filePath;
         private int m_num;
+        public bool Result;
         public confirmDialog(Mat frame, string item,int num)
         {
             InitializeComponent();
@@ -49,12 +50,14 @@ namespace divitage
 
         private void StartConvertButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Result = true;
+            this.Close();
         }
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Result = false;
+            this.Close();
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

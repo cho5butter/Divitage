@@ -35,7 +35,7 @@
             </Button.Template>
         </Button>
         <Image x:Name="previewImage" HorizontalAlignment="Left" Height="181" Margin="28,80,0,0" VerticalAlignment="Top" Width="257" Source="Resources/colorIcon.png" Stretch="Fill"/>
-        <TextBlock Margin="20,20,73,0" TextWrapping="Wrap" Text="以下のファイルの変換を実行しますか？" VerticalAlignment="Top" Height="28" Foreground="#FF04B2D9" FontSize="20"/>
+        <TextBlock Margin="20,20,73,0" TextWrapping="Wrap" Text="以下のファイルの分割を実行しますか？" VerticalAlignment="Top" Height="28" Foreground="#FF04B2D9" FontSize="20"/>
         <TextBlock HorizontalAlignment="Left" Margin="318,70,0,0" TextWrapping="Wrap" Text="ファイル名" VerticalAlignment="Top" Height="24" Width="74" FontSize="14" Foreground="#FFB9B9B9" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="318,130,0,0" TextWrapping="Wrap" Text="総フレーム数" VerticalAlignment="Top" Height="24" Width="74" FontSize="14" Foreground="#FFB9B9B9" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="318,190,131,0" TextWrapping="Wrap" Text="ファイルサイズ" VerticalAlignment="Top" Height="24" FontSize="14" Foreground="#FFB9B9B9" FontWeight="Bold"/>
