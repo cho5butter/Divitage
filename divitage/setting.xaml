@@ -95,8 +95,8 @@
         <RadioButton GroupName="fileExtension"  x:Name="settingExtentionJPG" Content=".jpg" HorizontalAlignment="Left" Margin="55,260,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionJPG_Click"/>
         <RadioButton GroupName="fileExtension" x:Name="settingExtensionBMP" Content=".bmp" HorizontalAlignment="Left" Margin="55,281,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionBMP_Click"/>
         <RadioButton GroupName="fileExtension" x:Name="settingExtensionTIF" Content=".tif" HorizontalAlignment="Left" Margin="55,301,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionTIF_Click"/>
-        <RadioButton GroupName="fileExtension" x:Name="settingExtensionPNG" Content=".png" HorizontalAlignment="Left" Margin="55,341,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionPNG_Click"/>
-        <RadioButton GroupName="fileExtension" x:Name="settingExtensionGIF" Content=".gif" HorizontalAlignment="Left" Margin="55,321,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionGIF_Click"/>
+        <RadioButton GroupName="fileExtension" x:Name="settingExtensionPNG" Content=".png" HorizontalAlignment="Left" Margin="55,321,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionPNG_Click"/>
+        <RadioButton GroupName="fileExtension" x:Name="settingExtensionGIF" Content=".gif" HorizontalAlignment="Left" Margin="55,341,0,0" VerticalAlignment="Top" Foreground="#FFD1D1D1" Click="SettingExtensionGIF_Click" Visibility="Hidden"/>
         <TextBlock x:Name="textBlock2" Margin="30,0,0,10" Grid.Row="1" TextWrapping="Wrap" Text="※設定を変更すると自動で保存されます" Height="16" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="204" Foreground="#FFD1D1D1" FontSize="11"/>
     </Grid>
 </Page>

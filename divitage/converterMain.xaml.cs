@@ -124,12 +124,12 @@ namespace divitage
             this.counter = 0;
             foreach (string item in this.fileNames)
             {
+                this.DoEvents();
                 this.splitMovie(item);
-                this.counter++;
             }
             //画面遷移終了
             this.endTransiton();
-            this.tbi.ShowBalloonTip("変換が完了しました", this.fileCount + "個のファイルの分割が正常に完了しました", Properties.Resources.colorIcon, true);
+            if (this.counter != 0) this.tbi.ShowBalloonTip("変換が完了しました", this.counter + "個のファイルの分割が正常に完了しました", Properties.Resources.colorIcon, true);
         }
 
         private void splitMovie(string item)
@@ -138,22 +138,42 @@ namespace divitage
             string folderPath = this.makeFolder(item);
             //拡張子保存
             string extension = this.getExtension();
+            //画像の出力枚数
+            int tmpCounter = 0;
             try
             {
                 //動画ファイル分割
                 VideoCapture vcap = new VideoCapture(item);
                 for (int pos = 0; pos < vcap.FrameCount; pos++)
                 {
+                    bool use = isThisUsingFrame(pos, vcap.FrameCount);
+                    if (!use) continue;//設定範囲外のときは処理を実行しない
                     Mat frame = new Mat();
                     vcap.PosFrames = pos;
                     vcap.Read(frame);
-                    if (this.counter == 0 && pos == 0) this.showConfirmDialog(frame, item);
-                    mw.progressBar.Value = ((float)(pos + 1) / vcap.FrameCount) * 100 * ((float)(this.counter + 1) / this.fileCount);
+                    if (tmpCounter == 0) this.showConfirmDialog(frame, item);
                     frame.SaveImage(string.Format("{0}/{1}.{2}", folderPath, pos + 1, extension));
                     frame.Dispose();
+                    float fileProgress = ((float)(pos + 1) / vcap.FrameCount) * 100;
+                    float progressPercent = fileProgress * ((float)(this.counter + 1) / this.fileCount);
+                    tmpCounter++;
+                    if (fileProgress % 1 != 0) continue;//処理軽減
+                    this.discText.Text = string.Format("処理が{0}％完了しました．現在({1}/{2})のファイルを処理中", progressPercent, (this.counter + 1), this.fileCount);
+                    mw.progressBar.Value = progressPercent;
                     this.DoEvents();
                 }
                 vcap.Dispose();
+                if(tmpCounter == 0)
+                {
+                    //すべてが設定範囲外だった場合だよん
+                    this.tbi.ShowBalloonTip("以下のファイルの処理がスキップされました", string.Format("設定項目の条件に満たさなかったため，「{0}」の処理は行われませんでした．", System.IO.Path.GetFileNameWithoutExtension(item)), BalloonIcon.Warning);
+                    deleteFolder(folderPath);
+                }
+                else
+                {
+                    this.counter++;
+                }
+                mw.progressBar.Value = 100;
             }
             catch (Exception e)
             {
@@ -176,6 +196,8 @@ namespace divitage
             //開始時の画面遷移
             this.topIcon.Visibility = Visibility.Collapsed;
             this.topLoading.Visibility = Visibility.Visible;
+            this.processStart.Visibility = Visibility.Collapsed;
+            this.discText.Text = "現在変換中です．完了までお待ち下さい．";
 
         }
         private void endTransiton()
@@ -183,11 +205,14 @@ namespace divitage
             //終了時の画面遷移＆各パラメータリセット
             this.topIcon.Visibility = Visibility.Visible;
             this.topLoading.Visibility = Visibility.Collapsed;
+            this.processStart.Visibility = Visibility.Visible;
+            this.discText.Text = "動画ファイルをここにドラッグ＆ドロップするか以下のボタンからファイルを選択して下さい";
         }
 
         private string makeFolder(string path)
         {
-            DateTime dt = DateTime.Today;
+            DateTime dt = DateTime.Now;
+            //MessageBox.Show(dt.ToString("HHmm"));
             string date = dt.ToString("yyyyMMdd");
             string time = dt.ToString("HHmm");
             System.Guid g = System.Guid.NewGuid();
@@ -290,6 +315,50 @@ namespace divitage
         {
             ((DispatcherFrame)obj).Continue = false;
             return null;
+        }
+
+        private bool isThisUsingFrame(int frame, int maxframe)
+        {
+            bool isUse = true;
+            if(Properties.Settings.Default.settingInterval == 0)
+            {
+                //枚数ごとに分割
+                if(frame % (int)Properties.Settings.Default.settingSplitFrameInterval == 0)
+                {
+                    isUse = true;
+                }
+                else
+                {
+                    isUse = false; ;
+                }
+            }
+            else
+            {
+                //％ごとに分割
+                int interval = Properties.Settings.Default.settingSplitFrameInterval;
+                if(interval > 100)
+                {
+                    interval = 100;
+                }
+                int intFrame = (int)((maxframe / 100.0) * interval);
+                intFrame = intFrame == 0 ? 1 : intFrame;//0の場合は強制格上げ
+                if(frame % intFrame == 0)
+                {
+                    isUse = true;
+                }
+                else
+                {
+                    isUse = false;
+                }
+            }
+            if(isUse && Properties.Settings.Default.settingStartOrEndFrame)
+            {
+                if (
+                    1 + frame < Properties.Settings.Default.settingStartFrame ||
+                    Properties.Settings.Default.settingEndFrame < 1 + frame
+                    ) isUse = false;
+            }
+            return isUse;
         }
     }
 }

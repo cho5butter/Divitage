@@ -162,28 +162,28 @@ namespace divitage
         private void SettingExtensionBMP_Click(object sender, RoutedEventArgs e)
         {
             //画像分割ファイル（BMP)
-            Properties.Settings.Default.settingImageSplitExtension = 0;
+            Properties.Settings.Default.settingImageSplitExtension = 1;
             this.settingDefaultSave();
         }
 
         private void SettingExtensionTIF_Click(object sender, RoutedEventArgs e)
         {
             //画像分割ファイル（TIF）
-            Properties.Settings.Default.settingImageSplitExtension = 1;
+            Properties.Settings.Default.settingImageSplitExtension = 2;
             this.settingDefaultSave();
         }
 
         private void SettingExtensionPNG_Click(object sender, RoutedEventArgs e)
         {
             //画像分割ファイル（PNG）
-            Properties.Settings.Default.settingImageSplitExtension = 2;
+            Properties.Settings.Default.settingImageSplitExtension = 3;
             this.settingDefaultSave();
         }
 
         private void SettingExtensionJPG_Click(object sender, RoutedEventArgs e)
         {
             //画像分割ファイル（JPG）
-            Properties.Settings.Default.settingImageSplitExtension = 3;
+            Properties.Settings.Default.settingImageSplitExtension = 0;
             this.settingDefaultSave();
         }
 

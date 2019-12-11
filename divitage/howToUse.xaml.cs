@@ -32,5 +32,30 @@ namespace divitage
         {
             mainWindow.frame.Source = new Uri("converterMain.xaml", UriKind.Relative);
         }
+
+        private void Image3_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //メール
+            System.Diagnostics.Process.Start("https://c5bt.net/contact");
+        }
+
+        private void Image2_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //ブラウザ
+            System.Diagnostics.Process.Start("https://c5bt.net/");
+        }
+
+        private void Image4_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Twitter
+            System.Diagnostics.Process.Start("https://twitter.com/__cho__");
+        }
+
+        private void Image5_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Youtube
+            System.Diagnostics.Process.Start("https://www.youtube.com/user/akutore");
+
+        }
     }
 }
