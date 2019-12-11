@@ -151,7 +151,7 @@ namespace divitage
                     Mat frame = new Mat();
                     vcap.PosFrames = pos;
                     vcap.Read(frame);
-                    if (tmpCounter == 0) this.showConfirmDialog(frame, item);
+                    if (tmpCounter == 0 && Properties.Settings.Default.settingCheckBeforeConvert) this.showConfirmDialog(frame, item, vcap.FrameCount);
                     frame.SaveImage(string.Format("{0}/{1}.{2}", folderPath, pos + 1, extension));
                     frame.Dispose();
                     float fileProgress = ((float)(pos + 1) / vcap.FrameCount) * 100;
@@ -186,9 +186,11 @@ namespace divitage
             }
         }
 
-        private void showConfirmDialog(Mat frame, string path)
+        private void showConfirmDialog(Mat frame, string path, int num)
         {
             //確認画面表示オプション
+            confirmDialog cd = new confirmDialog(frame, path, num);
+            cd.ShowDialog();
 
         }
         private void startTransition()

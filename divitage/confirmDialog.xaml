@@ -1,0 +1,46 @@
+﻿<Window x:Class="divitage.confirmDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:divitage"
+        mc:Ignorable="d"
+        Title="confirmDialog" Height="381" Width="581" ResizeMode="NoResize" WindowStyle="None" BorderThickness="20px" AllowsTransparency="True">
+    <Window.Effect>
+        <DropShadowEffect Opacity="0.75" BlurRadius="20" ShadowDepth="0"/>
+    </Window.Effect>
+    <Grid Background="#FF3E3E3E" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+        <Button Cursor="Hand" x:Name="cancelButton" Content="中止" HorizontalAlignment="Left" Margin="232,278,0,0" VerticalAlignment="Top" Width="102" Height="41" Click="CancelButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border"
+                                    BorderThickness="1"
+                                    Background="#CC818181"
+                                    CornerRadius="20">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Button Cursor="Hand" x:Name="startConvertButton" Content="変換する" Margin="348,278,20,20" Foreground="LightGray" Click="StartConvertButton_Click">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border"
+                                    BorderThickness="1"
+                                    Background="#CCF23005"
+                                    CornerRadius="20">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
+        </Button>
+        <Image x:Name="previewImage" HorizontalAlignment="Left" Height="181" Margin="28,80,0,0" VerticalAlignment="Top" Width="257" Source="Resources/colorIcon.png" Stretch="Fill"/>
+        <TextBlock Margin="20,20,73,0" TextWrapping="Wrap" Text="以下のファイルの変換を実行しますか？" VerticalAlignment="Top" Height="28" Foreground="#FF04B2D9" FontSize="20"/>
+        <TextBlock HorizontalAlignment="Left" Margin="318,70,0,0" TextWrapping="Wrap" Text="ファイル名" VerticalAlignment="Top" Height="24" Width="74" FontSize="14" Foreground="#FFB9B9B9" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="318,130,0,0" TextWrapping="Wrap" Text="総フレーム数" VerticalAlignment="Top" Height="24" Width="74" FontSize="14" Foreground="#FFB9B9B9" FontWeight="Bold"/>
+        <TextBlock HorizontalAlignment="Left" Margin="318,190,131,0" TextWrapping="Wrap" Text="ファイルサイズ" VerticalAlignment="Top" Height="24" FontSize="14" Foreground="#FFB9B9B9" FontWeight="Bold"/>
+        <TextBlock x:Name="fileName" HorizontalAlignment="Center" Margin="348,90,48,211" TextWrapping="Wrap" Text="somePikking.jpg" VerticalAlignment="Center" Height="24" Width="143" Foreground="#FFB9B9B9" FontSize="14"/>
+        <TextBlock x:Name="frameNumber" HorizontalAlignment="Center" Margin="348,150,48,156" TextWrapping="Wrap" Text="4500フレーム" VerticalAlignment="Center" Height="24" Width="143" Foreground="#FFB9B9B9" FontSize="14"/>
+        <TextBlock x:Name="fileSize" HorizontalAlignment="Center" Margin="348,210,48,101" TextWrapping="Wrap" Text="24GB" VerticalAlignment="Center" Height="24" Width="143" Foreground="#FFB9B9B9" FontSize="14"/>
+    </Grid>
+</Window>
