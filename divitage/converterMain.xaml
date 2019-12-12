@@ -13,6 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles/LoadingDoubleBounce.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/LoadingIndicators.WPF;component/Styles.xaml"/>
+                <ResourceDictionary Source="/UI_Dictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
@@ -31,18 +32,7 @@
                 </loadin:LoadingIndicator>
                 <Image x:Name="topIcon" Source="Resources/video-player.png" Width="150" Margin="0 0 0 30"/>
                 <TextBlock x:Name="discText" Text="動画ファイルをここにドラッグ＆ドロップするか以下のボタンからファイルを選択して下さい" Foreground="#FFDADADA" FontSize="14"/>
-                <Button x:Name="processStart" Cursor="Hand" Content="動画ファイルを選択" Width="300" Height="40" Margin="0 30 0 30" Foreground="#FFDADADA" Click="Button_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Name="border"
-                                    BorderThickness="1"
-                                    Background="#CCF23005"
-                                    CornerRadius="10">
-                                <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                <Button Style="{StaticResource confirmYesButtonAndStartProgressButton}" x:Name="processStart" Cursor="Hand" Content="動画ファイルを選択" Width="300" Height="40" Margin="0 30 0 30" Foreground="#FFDADADA" Click="Button_Click"/>
             </StackPanel>
         </Border>
 

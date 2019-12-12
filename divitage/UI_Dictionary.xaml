@@ -4,6 +4,8 @@
     <SolidColorBrush x:Key="NormalBackgroundBrush" Color="#FF3E3E3E"/>
     <SolidColorBrush x:Key="HoverBackgroundBrush" Color="#FF04B2D9"/>
     <SolidColorBrush x:Key="TransitionButtonBackgroundBrush" Color="#FF6E6E6E"/>
+    <SolidColorBrush x:Key="StartBackgroundBrush" Color="#CCF23005"/>
+    <SolidColorBrush x:Key="hoverStartBackgroundBurush" Color="#CCE86143"/>
     <Style x:Key="HoverButtonStyle" TargetType="{x:Type Button}">
         <!-- <Button FontFamily="Marlett" Content="0" FontSize="16" BorderBrush="{x:Null}"  Background="#FF3E3E3E" Foreground="#FFCBCBCB" Padding="10 5"/> -->
         <Setter Property="Padding" Value="10 5"/>
@@ -37,6 +39,59 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border Name="border" Height="50" VerticalAlignment="Center" BorderBrush="Transparent" Background="{StaticResource TransitionButtonBackgroundBrush}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="DocumentViewerBase.Background" Value="{StaticResource HoverBackgroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="toTopButton" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Margin" Value="0 0 30 10"/>
+        <Setter Property="Content" Value="変換画面へ"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" Height="50" VerticalAlignment="Center" BorderBrush="Transparent" Background="{StaticResource TransitionButtonBackgroundBrush}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="DocumentViewerBase.Background" Value="{StaticResource HoverBackgroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="confirmYesButtonAndStartProgressButton" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" BorderThickness="1" CornerRadius="20" Background="{StaticResource StartBackgroundBrush}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="DocumentViewerBase.Background" Value="{StaticResource hoverStartBackgroundBurush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>    
+    <Style x:Key="confirmCancelButton" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" BorderThickness="1" CornerRadius="20" Background="{StaticResource TransitionButtonBackgroundBrush}">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>

@@ -7,7 +7,13 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="setting">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UI_Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -17,7 +23,7 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="returnButton" Width="200" Margin="0 0 30 10" Content="戻る" Click="returnButton_Click" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+        <Button Style="{StaticResource toTopButton}" x:Name="returnButton" Click="returnButton_Click" Grid.Column="1" Grid.Row="1" Foreground="#FFF1F1F1"/>
         <TextBlock x:Name="textBlock" Margin="30 0 0 0" TextWrapping="Wrap" Text="ファイル保存場所" VerticalAlignment="Top" Foreground="#FFD1D1D1" Height="28" FontSize="16" HorizontalAlignment="Left" Width="124">
             <ToolTipService.ToolTip>
                 <ToolTip Content="分割ファイルフォルダの生成場所を選択します"/>

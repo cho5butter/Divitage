@@ -7,13 +7,19 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="howToUse">
-
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/UI_Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Button x:Name="returnButton" Width="200" Margin="0 0 30 10" Content="戻る" Click="returnButton_Click" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Right" VerticalContentAlignment="Center"/>
+        <Button Style="{StaticResource toTopButton}" x:Name="returnButton" Click="returnButton_Click" Grid.Column="1" Grid.Row="1" Foreground="#FFF1F1F1"/>
         <Image x:Name="image" Height="150" VerticalAlignment="Top" Source="Resources/setting.jpg" Stretch="UniformToFill" Margin="30 -10 30 0"/>
         <Rectangle Margin="30,130,30,30" Fill="#FF4F4F4F"/>
         <Ellipse x:Name="image1" HorizontalAlignment="Center" Height="120" Margin="0,70,0,0" VerticalAlignment="Top" Width="120">
