@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Divitage.Maui.Pages.HomePage"
+             Title="変換">
+    <ScrollView>
+        <VerticalStackLayout Spacing="24">
+            <Frame CornerRadius="24" Padding="24" BackgroundColor="#3E3E3E">
+                <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <Image Source="video-player.png" HeightRequest="140" />
+                    <Label Text="動画ファイルを選択してフレームを分割します" HorizontalTextAlignment="Center" FontSize="18" />
+                    <Label Text="複数ファイルの一括処理、拡張子や分割間隔の指定に対応しています" HorizontalTextAlignment="Center" FontSize="14" TextColor="#FFD1D1D1" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <Button Text="動画ファイルを選択" Clicked="OnPickFilesClicked" />
+            <Button x:Name="CancelButton" Text="処理を中止" BackgroundColor="#8C3D3D" Clicked="OnCancelClicked" IsEnabled="False" />
+
+            <StackLayout>
+                <Label Text="選択中のファイル" FontAttributes="Bold" />
+                <CollectionView ItemsSource="{Binding SelectedFiles}" HeightRequest="120">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="8" ColumnDefinitions="Auto,*">
+                                <Image Source="icon.png" HeightRequest="24" WidthRequest="24" />
+                                <Label Grid.Column="1" Text="{Binding .}" Margin="12,0,0,0" LineBreakMode="TailTruncation" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+
+            <StackLayout>
+                <Label Text="進行状況" FontAttributes="Bold" />
+                <ProgressBar x:Name="Progress" Progress="0" HeightRequest="8" />
+                <Label x:Name="Status" Text="ファイルを選択すると処理が始まります" FontSize="14" TextColor="#FFD1D1D1" />
+                <ActivityIndicator x:Name="Spinner" IsRunning="False" IsVisible="False" />
+            </StackLayout>
+
+            <Frame BackgroundColor="#2A2A2A" CornerRadius="20" Padding="16">
+                <Label x:Name="Summary" TextColor="#FFD1D1D1" />
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
