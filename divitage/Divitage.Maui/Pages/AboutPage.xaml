@@ -26,6 +26,14 @@
                     </Grid>
                 </VerticalStackLayout>
             </Frame>
+
+            <Frame CornerRadius="18" Padding="18">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="ライセンス情報" FontAttributes="Bold" />
+                    <Label Text="このアプリは OpenCvSharp (Apache 2.0) / OpenCV (BSD) を使用しています。" TextColor="#FFD1D1D1" />
+                    <Label Text="ThirdPartyNotices.txt にサードパーティライセンスの詳細を同梱しています。" TextColor="#FFD1D1D1" />
+                </VerticalStackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
