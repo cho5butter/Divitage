@@ -1,0 +1,22 @@
+<Page
+    x:Class="DivitageWinUI.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Padding="24" Spacing="16">
+        <TextBlock Text="設定" Style="{StaticResource TitleTextBlockStyle}" />
+
+        <StackPanel>
+            <ToggleSwitch Header="ログイン時に起動" Toggled="OnLaunchAtLoginToggled" />
+            <ToggleSwitch Header="処理完了後に一時ファイルを削除" IsOn="True" Toggled="OnAutoCleanupToggled" />
+            <ToggleSwitch Header="タイムスタンプを保持" IsOn="True" Toggled="OnPreserveTimestampToggled" />
+        </StackPanel>
+
+        <StackPanel>
+            <TextBlock Text="保存先" FontWeight="SemiBold" />
+            <TextBlock x:Name="OutputDirectoryText" TextWrapping="Wrap" />
+            <Button Content="エクスプローラーで開く" Click="OnRevealClicked" />
+        </StackPanel>
+    </StackPanel>
+</Page>

@@ -1,0 +1,24 @@
+<Window
+    x:Class="DivitageWinUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DivitageWinUI"
+    Title="Divitage for Windows"
+    Height="720"
+    Width="1200"
+    ExtendsContentIntoTitleBar="True"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
+
+    <controls:NavigationView x:Name="RootNavigation"
+                              IsBackButtonVisible="Collapsed"
+                              Loaded="OnNavigationLoaded"
+                              SelectionChanged="OnNavigationSelectionChanged">
+        <controls:NavigationView.MenuItems>
+            <controls:NavigationViewItem Content="コンバーター" Icon="Sync" Tag="converter" />
+            <controls:NavigationViewItem Content="設定" Icon="Settings" Tag="settings" />
+            <controls:NavigationViewItem Content="使い方" Icon="Help" Tag="howto" />
+        </controls:NavigationView.MenuItems>
+
+        <Frame x:Name="ContentFrame" />
+    </controls:NavigationView>
+</Window>

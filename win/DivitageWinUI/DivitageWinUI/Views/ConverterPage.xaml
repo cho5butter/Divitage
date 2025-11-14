@@ -1,0 +1,71 @@
+<Page
+    x:Class="DivitageWinUI.Views.ConverterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid RowSpacing="20" Padding="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="200" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="Divitage for Windows" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock Text="ドラッグ＆ドロップまたはファイル選択で変換キューを作成します。" />
+        </StackPanel>
+
+        <Border Grid.Row="1"
+                x:Name="DropZone"
+                BorderBrush="{ThemeResource AccentFillColorTertiaryBrush}"
+                BorderThickness="2"
+                CornerRadius="12"
+                AllowDrop="True"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                DragOver="OnDropZoneDragOver"
+                Drop="OnDropZoneDrop">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="ここにファイル / フォルダをドロップ" HorizontalAlignment="Center" />
+                <TextBlock Text="Ctrl+Enter で変換開始" HorizontalAlignment="Center" Opacity="0.7" />
+            </StackPanel>
+        </Border>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Spacing="12">
+            <Button Content="ファイルを追加" Click="OnAddFilesClicked" />
+            <Button Content="フォルダを追加" Click="OnAddFolderClicked" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="3">
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <TextBlock Text="投入予定" FontWeight="SemiBold" />
+                <TextBlock x:Name="PendingCountText" Text="0 件" />
+            </StackPanel>
+            <ListView x:Name="PendingList" Height="120" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+            <TextBlock Text="出力先" FontWeight="SemiBold" />
+            <TextBlock x:Name="OutputPathText" TextWrapping="Wrap" Width="400" />
+            <Button Content="変更" Click="OnChangeOutputClicked" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Stretch" Spacing="12">
+            <TextBlock x:Name="QueueStatusText" Text="キュー: 0 件" VerticalAlignment="Center" />
+            <Button x:Name="ConvertButton" Content="変換開始" HorizontalAlignment="Right" Click="OnConvertClicked" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="6">
+            <TextBlock Text="アクティビティ" FontWeight="SemiBold" />
+            <ListView x:Name="LogListView" Height="180" />
+            <TextBlock x:Name="StatusInfo" />
+        </StackPanel>
+    </Grid>
+</Page>
