@@ -77,4 +77,31 @@ public static class SettingsHelper
         get => _settings.Values["preserveTimestamp"] is bool value ? value : true;
         set => _settings.Values["preserveTimestamp"] = value;
     }
+
+    /// <summary>
+    /// アプリケーションテーマを取得または設定します（0: System, 1: Light, 2: Dark）
+    /// </summary>
+    public static int Theme
+    {
+        get => _settings.Values["theme"] is int value ? value : 0;
+        set => _settings.Values["theme"] = value;
+    }
+
+    /// <summary>
+    /// 選択されているプロファイルIDを取得または設定します
+    /// </summary>
+    public static string? SelectedProfileId
+    {
+        get => _settings.Values["selectedProfileId"] as string;
+        set => _settings.Values["selectedProfileId"] = value;
+    }
+
+    /// <summary>
+    /// 変換履歴を保持する日数を取得または設定します
+    /// </summary>
+    public static int HistoryRetentionDays
+    {
+        get => _settings.Values["historyRetentionDays"] is int value ? value : 90;
+        set => _settings.Values["historyRetentionDays"] = value;
+    }
 }
