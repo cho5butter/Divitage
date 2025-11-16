@@ -6,6 +6,9 @@ using System;
 
 namespace DivitageWinUI;
 
+/// <summary>
+/// アプリケーションのメインウィンドウ
+/// </summary>
 public sealed partial class MainWindow : Window
 {
     public MainWindow()

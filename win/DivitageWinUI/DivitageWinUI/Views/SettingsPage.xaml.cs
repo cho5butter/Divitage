@@ -1,27 +1,43 @@
+using DivitageWinUI.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
-using Windows.Storage;
 
 namespace DivitageWinUI.Views;
 
+/// <summary>
+/// アプリケーション設定を管理するページ
+/// </summary>
 public sealed partial class SettingsPage : Page
 {
-    private readonly ApplicationDataContainer _settings = ApplicationData.Current.LocalSettings;
-
     public SettingsPage()
     {
         InitializeComponent();
-        var downloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-        OutputDirectoryText.Text = Path.Combine(downloads, "DivitageOutput");
+        LoadSettings();
+
+        // 出力ディレクトリの変更イベントを購読
+        SettingsHelper.OutputDirectoryChanged += OnOutputDirectoryChanged;
+    }
+
+    private void LoadSettings()
+    {
+        LaunchAtLoginToggle.IsOn = SettingsHelper.LaunchAtLogin;
+        AutoCleanupToggle.IsOn = SettingsHelper.AutoCleanup;
+        PreserveTimestampToggle.IsOn = SettingsHelper.PreserveTimestamp;
+        OutputDirectoryText.Text = SettingsHelper.OutputDirectory;
+    }
+
+    private void OnOutputDirectoryChanged(object? sender, string newDirectory)
+    {
+        OutputDirectoryText.Text = newDirectory;
     }
 
     private void OnLaunchAtLoginToggled(object sender, RoutedEventArgs e)
     {
         if (sender is ToggleSwitch toggle)
         {
-            _settings.Values["launchAtLogin"] = toggle.IsOn;
+            SettingsHelper.LaunchAtLogin = toggle.IsOn;
         }
     }
 
@@ -29,7 +45,7 @@ public sealed partial class SettingsPage : Page
     {
         if (sender is ToggleSwitch toggle)
         {
-            _settings.Values["autoCleanup"] = toggle.IsOn;
+            SettingsHelper.AutoCleanup = toggle.IsOn;
         }
     }
 
@@ -37,16 +53,24 @@ public sealed partial class SettingsPage : Page
     {
         if (sender is ToggleSwitch toggle)
         {
-            _settings.Values["preserveTimestamp"] = toggle.IsOn;
+            SettingsHelper.PreserveTimestamp = toggle.IsOn;
         }
     }
 
     private async void OnRevealClicked(object sender, RoutedEventArgs e)
     {
-        var path = OutputDirectoryText.Text;
-        if (Directory.Exists(path))
+        try
         {
-            await Windows.System.Launcher.LaunchFolderPathAsync(path);
+            var path = SettingsHelper.OutputDirectory;
+            if (Directory.Exists(path))
+            {
+                await Windows.System.Launcher.LaunchFolderPathAsync(path);
+            }
+        }
+        catch (Exception ex)
+        {
+            // エラーハンドリング: ContentDialogなどで通知することも可能
+            System.Diagnostics.Debug.WriteLine($"フォルダを開く際にエラーが発生しました: {ex.Message}");
         }
     }
 }

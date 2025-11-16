@@ -57,10 +57,17 @@
             <Button Content="変更" Click="OnChangeOutputClicked" />
         </StackPanel>
 
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Stretch" Spacing="12">
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
             <TextBlock x:Name="QueueStatusText" Text="キュー: 0 件" VerticalAlignment="Center" />
-            <Button x:Name="ConvertButton" Content="変換開始" HorizontalAlignment="Right" Click="OnConvertClicked" />
-        </StackPanel>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="12">
+                <Button x:Name="ConvertButton" Content="変換開始" Click="OnConvertClicked" />
+                <Button x:Name="CancelButton" Content="キャンセル" Click="OnCancelClicked" IsEnabled="False" />
+            </StackPanel>
+        </Grid>
 
         <StackPanel Grid.Row="6">
             <TextBlock Text="アクティビティ" FontWeight="SemiBold" />

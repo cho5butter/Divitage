@@ -8,9 +8,9 @@
         <TextBlock Text="設定" Style="{StaticResource TitleTextBlockStyle}" />
 
         <StackPanel>
-            <ToggleSwitch Header="ログイン時に起動" Toggled="OnLaunchAtLoginToggled" />
-            <ToggleSwitch Header="処理完了後に一時ファイルを削除" IsOn="True" Toggled="OnAutoCleanupToggled" />
-            <ToggleSwitch Header="タイムスタンプを保持" IsOn="True" Toggled="OnPreserveTimestampToggled" />
+            <ToggleSwitch x:Name="LaunchAtLoginToggle" Header="ログイン時に起動" Toggled="OnLaunchAtLoginToggled" />
+            <ToggleSwitch x:Name="AutoCleanupToggle" Header="処理完了後に一時ファイルを削除" Toggled="OnAutoCleanupToggled" />
+            <ToggleSwitch x:Name="PreserveTimestampToggle" Header="タイムスタンプを保持" Toggled="OnPreserveTimestampToggled" />
         </StackPanel>
 
         <StackPanel>

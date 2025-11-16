@@ -16,6 +16,26 @@ Divitage はメディアファイルをドラッグ＆ドロップでバッチ�
 2. `win/DivitageWinUI/DivitageWinUI.sln` を開き、必要な Windows App SDK / Windows SDK を復元します。
 3. `DivitageWinUI` プロジェクトを起動プロジェクトに設定し、任意の構成 (Debug/Release) で実行します。
 
+### テストの実行
+
+1. Visual Studio で `DivitageWinUI.sln` を開きます。
+2. テストエクスプローラーを開き (テスト > テストエクスプローラー)、すべてのテストを実行します。
+3. または、コマンドラインから `dotnet test` を実行します。
+
+```bash
+cd win/DivitageWinUI
+dotnet test
+```
+
+### 主な機能
+
+- **ドラッグ＆ドロップ**: ファイルやフォルダを簡単に変換キューに追加
+- **バッチ変換**: 複数のファイルを一括で変換
+- **変換キャンセル**: 長時間の変換処理を中断可能
+- **設定の永続化**: 出力先やオプション設定を保存
+- **エラーハンドリング**: 堅牢なエラー処理とログ記録
+- **自動スクロール**: 最新のログを常に表示
+
 ## セットアップ手順 (macOS)
 
 1. Xcode 15 以降、または CLI で `cd mac/DivitageMacApp && swift build` を実行します。
