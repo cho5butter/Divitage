@@ -36,3 +36,34 @@ qt_add_executable(DivitageLinuxApp
 
 target_include_directories(DivitageLinuxApp PRIVATE include)
 target_link_libraries(DivitageLinuxApp PRIVATE Qt6::Widgets)
+
+# Enable testing
+enable_testing()
+
+# Find Qt Test module
+find_package(Qt6 COMPONENTS Test QUIET)
+
+if(Qt6Test_FOUND)
+    # Create a library with the core logic (excluding main.cpp)
+    set(LIB_SOURCES
+        src/MainWindow.cpp
+        src/AppState.cpp
+        src/ConverterPanel.cpp
+        src/DropArea.cpp
+        src/SettingsPanel.cpp
+        src/HowToPanel.cpp
+        src/ConversionWorker.cpp
+    )
+
+    add_library(DivitageLinuxCore STATIC ${LIB_SOURCES} ${HEADERS})
+    target_include_directories(DivitageLinuxCore PUBLIC include)
+    target_link_libraries(DivitageLinuxCore PUBLIC Qt6::Widgets)
+
+    # Link the executable to the core library
+    target_link_libraries(DivitageLinuxApp PRIVATE DivitageLinuxCore)
+
+    # Add test subdirectory
+    add_subdirectory(tests)
+else()
+    message(WARNING "Qt6::Test not found - tests will not be built")
+endif()

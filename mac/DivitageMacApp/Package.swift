@@ -15,6 +15,11 @@ let package = Package(
         .executableTarget(
             name: "DivitageMacApp",
             path: "Sources"
+        ),
+        .testTarget(
+            name: "DivitageMacAppTests",
+            dependencies: ["DivitageMacApp"],
+            path: "Tests"
         )
     ]
 )
