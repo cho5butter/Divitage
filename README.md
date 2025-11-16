@@ -70,17 +70,6 @@ ctest --output-on-failure
 
 詳細は `linux/DivitageLinuxApp/README.md` を参照してください。
 
-## CI/CD
-
-GitHub Actions を使用して、すべてのプラットフォームでビルドとテストを自動実行します:
-
-- **Windowsアプリ**: .NET ビルドとテスト
-- **Linuxアプリ**: Qt6 CMake ビルドとテスト
-- **Macアプリ**: Swift Package Manager ビルドとテスト
-
-ワークフローファイルは以下を参照してください:
-- `.github/workflows/build-test-linux-mac.yml` - Linux/Mac アプリのビルドとテスト
-
 ## 備考
 
 - 新しく追加するコードは各プラットフォームのディレクトリ配下に配置し、共通仕様は `docs/` に追記してください。

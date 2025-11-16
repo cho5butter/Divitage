@@ -73,10 +73,6 @@ DivitageMacApp/
         └── ConversionTaskTests.swift
 ```
 
-## CI/CD
-
-GitHub Actionsで自動的にビルドとテストが実行されます。ワークフローファイルは `.github/workflows/build-test-linux-mac.yml` を参照してください。
-
 ## 開発
 
 ### デバッグビルド

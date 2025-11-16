@@ -35,7 +35,3 @@ ctest --output-on-failure
 ./build/tests/test_appstate
 ./build/tests/test_filepath
 ```
-
-## CI/CD
-
-GitHub Actionsで自動的にビルドとテストが実行されます。ワークフローファイルは `.github/workflows/build-test-linux-mac.yml` を参照してください。
