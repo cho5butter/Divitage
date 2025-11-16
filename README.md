@@ -42,12 +42,44 @@ dotnet test
 2. Xcode の場合は `Package.swift` を開き、`DivitageMacApp` を実行ターゲットに設定します。
 3. 初回起動時にドラッグ＆ドロップと出力先アクセスの権限を許可してください。
 
+### テストの実行
+
+```bash
+cd mac/DivitageMacApp
+swift test
+```
+
+詳細は `mac/DivitageMacApp/README.md` を参照してください。
+
 ## セットアップ手順 (Linux / Qt 6)
 
 1. Qt 6.5+ と CMake 3.21+、C++20 コンパイラを用意します。
 2. `cd linux/DivitageLinuxApp && cmake -S . -B build -DCMAKE_BUILD_TYPE=Release` を実行します。
 3. `cmake --build build` でビルド後、`./build/DivitageLinuxApp` を起動します。
 4. 左ナビゲーションから「コンバーター」「設定」「使い方」を切り替え、`Ctrl+Enter` で変換キューへ投入できます。
+
+### テストの実行
+
+```bash
+cd linux/DivitageLinuxApp
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
+cmake --build build
+cd build
+ctest --output-on-failure
+```
+
+詳細は `linux/DivitageLinuxApp/README.md` を参照してください。
+
+## CI/CD
+
+GitHub Actions を使用して、すべてのプラットフォームでビルドとテストを自動実行します:
+
+- **Windowsアプリ**: .NET ビルドとテスト
+- **Linuxアプリ**: Qt6 CMake ビルドとテスト
+- **Macアプリ**: Swift Package Manager ビルドとテスト
+
+ワークフローファイルは以下を参照してください:
+- `.github/workflows/build-test-linux-mac.yml` - Linux/Mac アプリのビルドとテスト
 
 ## 備考
 
