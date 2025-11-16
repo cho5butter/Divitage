@@ -1,4 +1,5 @@
 using DivitageWinUI.Helpers;
+using DivitageWinUI.Services;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
@@ -22,7 +24,9 @@ public sealed partial class ConverterPage : Page
 {
     private readonly ObservableCollection<string> _pendingItems = new();
     private readonly ObservableCollection<string> _logItems = new();
+    private readonly FileConverterService _converterService = new();
     private bool _isProcessing;
+    private CancellationTokenSource? _cancellationTokenSource;
 
     public ConverterPage()
     {
@@ -36,6 +40,9 @@ public sealed partial class ConverterPage : Page
         // 出力ディレクトリの変更イベントを購読
         SettingsHelper.OutputDirectoryChanged += OnOutputDirectoryChanged;
 
+        // 変換進捗イベントを購読
+        _converterService.ProgressChanged += OnConversionProgressChanged;
+
         var accelerator = new KeyboardAccelerator { Key = Windows.System.VirtualKey.Enter, Modifiers = Windows.System.VirtualKeyModifiers.Control };
         accelerator.Invoked += (_, _) => { OnConvertClicked(null!, null!); };
         KeyboardAccelerators.Add(accelerator);
@@ -47,6 +54,17 @@ public sealed partial class ConverterPage : Page
     private void OnOutputDirectoryChanged(object? sender, string newDirectory)
     {
         OutputPathText.Text = newDirectory;
+    }
+
+    /// <summary>
+    /// 変換進捗が変更されたときの処理
+    /// </summary>
+    private void OnConversionProgressChanged(object? sender, ConversionProgressEventArgs e)
+    {
+        DispatcherQueue.TryEnqueue(() =>
+        {
+            StatusInfo.Text = $"変換中... ({e.ProcessedCount}/{e.TotalCount}) - {e.PercentComplete}%";
+        });
     }
 
     /// <summary>
@@ -158,7 +176,9 @@ public sealed partial class ConverterPage : Page
         }
 
         _isProcessing = true;
+        _cancellationTokenSource = new CancellationTokenSource();
         ConvertButton.IsEnabled = false;
+        CancelButton.IsEnabled = true;
         StatusInfo.Text = "変換を実行中...";
 
         var snapshot = _pendingItems.ToList();
@@ -167,6 +187,8 @@ public sealed partial class ConverterPage : Page
 
         try
         {
+            int totalConverted = 0;
+
             foreach (var item in snapshot)
             {
                 try
@@ -174,11 +196,19 @@ public sealed partial class ConverterPage : Page
                     var name = Path.GetFileName(item);
                     AppendLog($"変換開始: {name}");
 
-                    // TODO: 実際の変換処理をここに実装
-                    await Task.Delay(350);
+                    var convertedCount = await _converterService.ConvertAsync(
+                        item,
+                        SettingsHelper.OutputDirectory,
+                        _cancellationTokenSource.Token);
 
-                    var destination = Path.Combine(SettingsHelper.OutputDirectory, name);
-                    AppendLog($"完了: {destination}");
+                    totalConverted += convertedCount;
+                    AppendLog($"完了: {name} ({convertedCount} ファイル)");
+                }
+                catch (OperationCanceledException)
+                {
+                    AppendLog("変換がキャンセルされました");
+                    StatusInfo.Text = "変換がキャンセルされました";
+                    break;
                 }
                 catch (Exception ex)
                 {
@@ -186,7 +216,17 @@ public sealed partial class ConverterPage : Page
                 }
             }
 
-            StatusInfo.Text = "キューの処理が完了しました";
+            if (!_cancellationTokenSource.Token.IsCancellationRequested)
+            {
+                StatusInfo.Text = $"キューの処理が完了しました（{totalConverted} ファイル変換）";
+
+                // 自動クリーンアップが有効な場合、一時ファイルを削除
+                if (SettingsHelper.AutoCleanup)
+                {
+                    AppendLog("一時ファイルをクリーンアップ中...");
+                    // TODO: 一時ファイルのクリーンアップ処理
+                }
+            }
         }
         catch (Exception ex)
         {
@@ -196,8 +236,21 @@ public sealed partial class ConverterPage : Page
         finally
         {
             _isProcessing = false;
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
             ConvertButton.IsEnabled = _pendingItems.Any();
+            CancelButton.IsEnabled = false;
         }
+    }
+
+    /// <summary>
+    /// キャンセルボタンがクリックされたときの処理
+    /// </summary>
+    private void OnCancelClicked(object sender, RoutedEventArgs e)
+    {
+        _cancellationTokenSource?.Cancel();
+        CancelButton.IsEnabled = false;
+        AppendLog("変換のキャンセルを要求しました...");
     }
 
     /// <summary>

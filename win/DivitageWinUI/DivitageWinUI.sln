@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DivitageWinUI", "DivitageWinUI\DivitageWinUI.csproj", "{6E68C6E5-C8CE-41DF-A2F4-AC25F5DDFCE8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DivitageWinUI.Tests", "DivitageWinUI.Tests\DivitageWinUI.Tests.csproj", "{B7F8A3E1-9D4C-42B8-A1F5-3E2D7C8F6A9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6E68C6E5-C8CE-41DF-A2F4-AC25F5DDFCE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E68C6E5-C8CE-41DF-A2F4-AC25F5DDFCE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E68C6E5-C8CE-41DF-A2F4-AC25F5DDFCE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7F8A3E1-9D4C-42B8-A1F5-3E2D7C8F6A9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7F8A3E1-9D4C-42B8-A1F5-3E2D7C8F6A9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7F8A3E1-9D4C-42B8-A1F5-3E2D7C8F6A9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7F8A3E1-9D4C-42B8-A1F5-3E2D7C8F6A9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
