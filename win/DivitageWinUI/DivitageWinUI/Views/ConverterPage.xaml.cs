@@ -15,12 +15,14 @@ using WinRT.Interop;
 
 namespace DivitageWinUI.Views;
 
+/// <summary>
+/// メディアファイルの変換を行うメインページ
+/// </summary>
 public sealed partial class ConverterPage : Page
 {
     private readonly ObservableCollection<string> _pendingItems = new();
     private readonly ObservableCollection<string> _logItems = new();
     private bool _isProcessing;
-    private string _outputDirectory;
 
     public ConverterPage()
     {
@@ -28,57 +30,99 @@ public sealed partial class ConverterPage : Page
         PendingList.ItemsSource = _pendingItems;
         LogListView.ItemsSource = _logItems;
 
-        var downloads = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-        _outputDirectory = Path.Combine(downloads, "DivitageOutput");
-        Directory.CreateDirectory(_outputDirectory);
-        OutputPathText.Text = _outputDirectory;
+        // 設定から出力ディレクトリを取得
+        OutputPathText.Text = SettingsHelper.OutputDirectory;
+
+        // 出力ディレクトリの変更イベントを購読
+        SettingsHelper.OutputDirectoryChanged += OnOutputDirectoryChanged;
 
         var accelerator = new KeyboardAccelerator { Key = Windows.System.VirtualKey.Enter, Modifiers = Windows.System.VirtualKeyModifiers.Control };
         accelerator.Invoked += (_, _) => { OnConvertClicked(null!, null!); };
         KeyboardAccelerators.Add(accelerator);
     }
 
+    /// <summary>
+    /// 出力ディレクトリが変更されたときの処理
+    /// </summary>
+    private void OnOutputDirectoryChanged(object? sender, string newDirectory)
+    {
+        OutputPathText.Text = newDirectory;
+    }
+
+    /// <summary>
+    /// ファイル追加ボタンがクリックされたときの処理
+    /// </summary>
     private async void OnAddFilesClicked(object sender, RoutedEventArgs e)
     {
-        var picker = new FileOpenPicker();
-        picker.FileTypeFilter.Add("*");
-        InitializeWithWindow.Initialize(picker, WindowHelper.Handle);
-        var files = await picker.PickMultipleFilesAsync();
-        if (files is null)
+        try
         {
-            return;
+            var picker = new FileOpenPicker();
+            picker.FileTypeFilter.Add("*");
+            InitializeWithWindow.Initialize(picker, WindowHelper.Handle);
+            var files = await picker.PickMultipleFilesAsync();
+            if (files is null)
+            {
+                return;
+            }
+            foreach (var file in files)
+            {
+                AddPending(file.Path);
+            }
         }
-        foreach (var file in files)
+        catch (Exception ex)
         {
-            AddPending(file.Path);
+            AppendLog($"エラー: ファイルの追加に失敗しました - {ex.Message}");
         }
     }
 
+    /// <summary>
+    /// フォルダ追加ボタンがクリックされたときの処理
+    /// </summary>
     private async void OnAddFolderClicked(object sender, RoutedEventArgs e)
     {
-        var picker = new FolderPicker();
-        picker.FileTypeFilter.Add("*");
-        InitializeWithWindow.Initialize(picker, WindowHelper.Handle);
-        StorageFolder folder = await picker.PickSingleFolderAsync();
-        if (folder is not null)
+        try
         {
-            AddPending(folder.Path);
+            var picker = new FolderPicker();
+            picker.FileTypeFilter.Add("*");
+            InitializeWithWindow.Initialize(picker, WindowHelper.Handle);
+            StorageFolder folder = await picker.PickSingleFolderAsync();
+            if (folder is not null)
+            {
+                AddPending(folder.Path);
+            }
+        }
+        catch (Exception ex)
+        {
+            AppendLog($"エラー: フォルダの追加に失敗しました - {ex.Message}");
         }
     }
 
+    /// <summary>
+    /// 出力先変更ボタンがクリックされたときの処理
+    /// </summary>
     private async void OnChangeOutputClicked(object sender, RoutedEventArgs e)
     {
-        var picker = new FolderPicker();
-        picker.FileTypeFilter.Add("*");
-        InitializeWithWindow.Initialize(picker, WindowHelper.Handle);
-        StorageFolder folder = await picker.PickSingleFolderAsync();
-        if (folder is not null)
+        try
         {
-            _outputDirectory = folder.Path;
-            OutputPathText.Text = _outputDirectory;
+            var picker = new FolderPicker();
+            picker.FileTypeFilter.Add("*");
+            InitializeWithWindow.Initialize(picker, WindowHelper.Handle);
+            StorageFolder folder = await picker.PickSingleFolderAsync();
+            if (folder is not null)
+            {
+                SettingsHelper.OutputDirectory = folder.Path;
+            }
+        }
+        catch (Exception ex)
+        {
+            AppendLog($"エラー: 出力先の変更に失敗しました - {ex.Message}");
         }
     }
 
+    /// <summary>
+    /// 変換キューにパスを追加します
+    /// </summary>
+    /// <param name="path">追加するファイルまたはフォルダのパス</param>
     private void AddPending(string? path)
     {
         if (string.IsNullOrWhiteSpace(path))
@@ -93,6 +137,9 @@ public sealed partial class ConverterPage : Page
         UpdateQueueText();
     }
 
+    /// <summary>
+    /// キューの表示を更新します
+    /// </summary>
     private void UpdateQueueText()
     {
         PendingCountText.Text = $"{_pendingItems.Count} 件";
@@ -100,6 +147,9 @@ public sealed partial class ConverterPage : Page
         ConvertButton.IsEnabled = !_isProcessing && _pendingItems.Any();
     }
 
+    /// <summary>
+    /// 変換開始ボタンがクリックされたときの処理
+    /// </summary>
     private async void OnConvertClicked(object? sender, RoutedEventArgs? e)
     {
         if (_isProcessing || !_pendingItems.Any())
@@ -115,38 +165,82 @@ public sealed partial class ConverterPage : Page
         _pendingItems.Clear();
         UpdateQueueText();
 
-        foreach (var item in snapshot)
+        try
         {
-            var name = Path.GetFileName(item);
-            AppendLog($"変換開始: {name}");
-            await Task.Delay(350);
-            var destination = Path.Combine(_outputDirectory, name);
-            AppendLog($"完了: {destination}");
-        }
+            foreach (var item in snapshot)
+            {
+                try
+                {
+                    var name = Path.GetFileName(item);
+                    AppendLog($"変換開始: {name}");
 
-        _isProcessing = false;
-        StatusInfo.Text = "キューの処理が完了しました";
-        ConvertButton.IsEnabled = _pendingItems.Any();
+                    // TODO: 実際の変換処理をここに実装
+                    await Task.Delay(350);
+
+                    var destination = Path.Combine(SettingsHelper.OutputDirectory, name);
+                    AppendLog($"完了: {destination}");
+                }
+                catch (Exception ex)
+                {
+                    AppendLog($"エラー: {Path.GetFileName(item)} の変換に失敗しました - {ex.Message}");
+                }
+            }
+
+            StatusInfo.Text = "キューの処理が完了しました";
+        }
+        catch (Exception ex)
+        {
+            StatusInfo.Text = "処理中にエラーが発生しました";
+            AppendLog($"エラー: {ex.Message}");
+        }
+        finally
+        {
+            _isProcessing = false;
+            ConvertButton.IsEnabled = _pendingItems.Any();
+        }
     }
 
+    /// <summary>
+    /// ログにメッセージを追加します
+    /// </summary>
+    /// <param name="message">追加するメッセージ</param>
     private void AppendLog(string message)
     {
         var line = $"[{DateTime.Now:HH:mm:ss}] {message}";
         _logItems.Add(line);
+
+        // 最新のログアイテムまでスクロール
+        if (_logItems.Count > 0)
+        {
+            LogListView.ScrollIntoView(_logItems[^1]);
+        }
     }
 
+    /// <summary>
+    /// ドロップゾーンにファイルがドラッグされたときの処理
+    /// </summary>
     private void OnDropZoneDragOver(object sender, DragEventArgs e)
     {
         e.AcceptedOperation = DataPackageOperation.Copy;
     }
 
+    /// <summary>
+    /// ドロップゾーンにファイルがドロップされたときの処理
+    /// </summary>
     private async void OnDropZoneDrop(object sender, DragEventArgs e)
     {
-        e.AcceptedOperation = DataPackageOperation.Copy;
-        var items = await e.DataView.GetStorageItemsAsync();
-        foreach (var storageItem in items)
+        try
         {
-            AddPending(storageItem.Path);
+            e.AcceptedOperation = DataPackageOperation.Copy;
+            var items = await e.DataView.GetStorageItemsAsync();
+            foreach (var storageItem in items)
+            {
+                AddPending(storageItem.Path);
+            }
+        }
+        catch (Exception ex)
+        {
+            AppendLog($"エラー: ドロップ操作に失敗しました - {ex.Message}");
         }
     }
 }
