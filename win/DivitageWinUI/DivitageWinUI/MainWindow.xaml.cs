@@ -15,6 +15,12 @@ public sealed partial class MainWindow : Window
     {
         InitializeComponent();
         WindowHelper.Initialize(this);
+
+        // Mica背景効果を有効化（Windows 11のモダンデザイン）
+        SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop()
+        {
+            Kind = Microsoft.UI.Composition.SystemBackdrops.MicaKind.Base
+        };
     }
 
     private void OnNavigationLoaded(object sender, RoutedEventArgs e)
@@ -45,7 +51,8 @@ public sealed partial class MainWindow : Window
 
         if (ContentFrame.CurrentSourcePageType != pageType)
         {
-            ContentFrame.Navigate(pageType);
+            // モダンなページトランジション効果を追加
+            ContentFrame.Navigate(pageType, null, new Microsoft.UI.Xaml.Media.Animation.EntranceNavigationTransitionInfo());
         }
     }
 }

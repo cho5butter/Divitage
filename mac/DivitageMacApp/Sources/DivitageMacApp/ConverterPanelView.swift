@@ -15,15 +15,25 @@ struct ConverterPanelView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             header
+                .transition(.move(edge: .top).combined(with: .opacity))
             dropZone
+                .transition(.scale.combined(with: .opacity))
             destinationPicker
+                .transition(.move(edge: .leading).combined(with: .opacity))
             logView
+                .transition(.move(edge: .bottom).combined(with: .opacity))
         }
         .padding(32)
-        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .shadow(color: .black.opacity(0.1), radius: 20, y: 10)
         .padding()
         .onReceive(NotificationCenter.default.publisher(for: .triggerConversion)) { _ in
             runConversion()
+        }
+        .onAppear {
+            withAnimation(.spring(response: 0.6, dampingFraction: 0.8).delay(0.1)) {
+                // エントランスアニメーション用
+            }
         }
     }
 
@@ -38,27 +48,57 @@ struct ConverterPanelView: View {
             Spacer()
             Button(action: runConversion) {
                 Label(appState.isProcessing ? "処理中" : "変換開始", systemImage: appState.isProcessing ? "hourglass" : "play.fill")
+                    .font(.headline)
             }
             .buttonStyle(.borderedProminent)
+            .controlSize(.large)
             .disabled(appState.isProcessing || sourceURL == nil)
+            .scaleEffect(appState.isProcessing ? 0.95 : 1.0)
+            .animation(.spring(response: 0.3, dampingFraction: 0.6), value: appState.isProcessing)
         }
     }
 
     private var dropZone: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .strokeBorder(dropHighlight ? Color.accentColor : Color.secondary.opacity(0.4), style: StrokeStyle(lineWidth: 2, dash: [8]))
-                .background(Color(nsColor: .windowBackgroundColor).opacity(dropHighlight ? 0.6 : 0.3))
-            VStack(spacing: 8) {
-                Image(systemName: "square.and.arrow.down")
-                    .font(.system(size: 32))
-                Text(sourceURL?.lastPathComponent ?? "ここにファイルをドロップ")
-                Text("※ 複数ファイルの場合はフォルダごとドロップ")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+            // Liquid Glass背景効果
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .stroke(
+                            LinearGradient(
+                                colors: dropHighlight
+                                    ? [Color.accentColor, Color.accentColor.opacity(0.5)]
+                                    : [Color.secondary.opacity(0.3), Color.secondary.opacity(0.1)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: dropHighlight ? 3 : 2
+                        )
+                )
+                .shadow(color: .black.opacity(dropHighlight ? 0.2 : 0.1), radius: dropHighlight ? 16 : 8, y: 4)
+
+            VStack(spacing: 16) {
+                Image(systemName: dropHighlight ? "arrow.down.doc.fill" : "square.and.arrow.down")
+                    .font(.system(size: 48))
+                    .symbolRenderingMode(.hierarchical)
+                    .foregroundStyle(dropHighlight ? .accentColor : .secondary)
+
+                VStack(spacing: 4) {
+                    Text(sourceURL?.lastPathComponent ?? "ここにファイルをドロップ")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+
+                    Text("※ 複数ファイルの場合はフォルダごとドロップ")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
+            .padding()
         }
-        .frame(height: 200)
+        .frame(height: 220)
+        .scaleEffect(dropHighlight ? 1.02 : 1.0)
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: dropHighlight)
         .onDrop(of: dropTypes, isTargeted: $dropHighlight) { providers in
             guard let provider = providers.first else { return false }
             provider.loadFileRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { url, _ in

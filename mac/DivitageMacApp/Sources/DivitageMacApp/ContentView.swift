@@ -7,14 +7,21 @@ struct ContentView: View {
         NavigationSplitView(sidebar: {
             sidebar
         }, content: {
-            switch appState.selectedPanel {
-            case .converter:
-                ConverterPanelView()
-            case .settings:
-                SettingsView()
-            case .howTo:
-                HowToUseView()
+            Group {
+                switch appState.selectedPanel {
+                case .converter:
+                    ConverterPanelView()
+                case .settings:
+                    SettingsView()
+                case .howTo:
+                    HowToUseView()
+                }
             }
+            .transition(.asymmetric(
+                insertion: .move(edge: .trailing).combined(with: .opacity),
+                removal: .move(edge: .leading).combined(with: .opacity)
+            ))
+            .animation(.spring(response: 0.4, dampingFraction: 0.8), value: appState.selectedPanel)
         }, detail: {
             DetailPlaceholderView(selection: appState.selectedPanel)
         })
