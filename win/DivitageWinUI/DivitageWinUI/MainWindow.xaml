@@ -12,7 +12,10 @@
     <controls:NavigationView x:Name="RootNavigation"
                               IsBackButtonVisible="Collapsed"
                               Loaded="OnNavigationLoaded"
-                              SelectionChanged="OnNavigationSelectionChanged">
+                              SelectionChanged="OnNavigationSelectionChanged"
+                              Background="Transparent"
+                              PaneDisplayMode="Left"
+                              IsPaneToggleButtonVisible="True">
         <controls:NavigationView.MenuItems>
             <controls:NavigationViewItem Content="コンバーター" Icon="Sync" Tag="converter" />
             <controls:NavigationViewItem Content="設定" Icon="Settings" Tag="settings" />
